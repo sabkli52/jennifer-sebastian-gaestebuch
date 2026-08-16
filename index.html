@@ -59,8 +59,12 @@
         display: flex;
     }
 
+    /* WICHTIG:
+       .center darf NICHT display:flex setzen,
+       sonst würden alle Screens gleichzeitig sichtbar.
+    */
+
     .center {
-        display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
@@ -653,12 +657,6 @@
         Das Brautpaar hat euch etwas zu sagen …
     </h1>
 
-    <!--
-        HIER später euren Videonamen eintragen.
-        Beispiel:
-        brautpaar-video.mp4
-    -->
-
     <video id="brideVideo"
            controls
            playsinline
@@ -682,10 +680,6 @@
 
 
 <script>
-
-/* =====================================================
-   VARIABLES
-===================================================== */
 
 let cameraStream = null;
 let mediaRecorder = null;
@@ -831,13 +825,6 @@ function startRecording() {
 
     const button =
         document.getElementById('recordButton');
-
-    /*
-       iOS unterstützt je nach Version
-       unterschiedliche Videoformate.
-
-       Wir versuchen zuerst WebM.
-    */
 
     let options = {};
 
@@ -1005,11 +992,6 @@ function updateTimer() {
 
 function createRecordedVideo() {
 
-    /*
-       Der Browser entscheidet hier anhand
-       des aufgenommenen Materials über das Format.
-    */
-
     let mimeType =
         mediaRecorder.mimeType ||
         'video/webm';
@@ -1086,20 +1068,6 @@ function recordAgain() {
 
 function saveVideo() {
 
-    /*
-       WICHTIG:
-
-       In diesem ersten Prototyp speichern wir
-       das Video noch NICHT auf einem Server.
-
-       Stattdessen simulieren wir den
-       erfolgreichen Upload.
-
-       Im nächsten Schritt ersetzen wir diese
-       Funktion durch den echten Upload.
-    */
-
-
     hideAllScreens();
 
     document
@@ -1164,11 +1132,6 @@ function showBrideVideo() {
 
 function brideVideoFinished() {
 
-    /*
-       Nach dem Video automatisch
-       zurück zum Menü.
-    */
-
     setTimeout(function() {
 
         showStart();
@@ -1179,7 +1142,7 @@ function brideVideoFinished() {
 
 
 /* =====================================================
-   PREVENT SCREEN SLEEP-LIKE BEHAVIOR
+   WAKE LOCK
 ===================================================== */
 
 let wakeLock = null;
@@ -1211,14 +1174,8 @@ async function requestWakeLock() {
 }
 
 
-/* Beim Start versuchen wir,
-   den Bildschirm wach zu halten. */
-
 requestWakeLock();
 
-
-/* Wenn die Seite wieder sichtbar wird,
-   Wake Lock erneut anfordern. */
 
 document.addEventListener(
     'visibilitychange',
