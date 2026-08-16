@@ -791,37 +791,37 @@ const MAX_RECORDING_TIME = 120;
 
 
 /*
- * 720p / moderate Bitrate
+ * 720p / 30 FPS / gute Qualität
  *
- * 1.800.000 bit/s Video
- * 96.000 bit/s Audio
+ * 2.500.000 bit/s Video
+ *    96.000 bit/s Audio
  *
- * Gesamt ca. 1,9 Mbit/s.
+ * Gesamt ca. 2,6 Mbit/s.
  *
- * Damit bleibt eine 2-Minuten-Aufnahme
- * normalerweise deutlich unter 34 MB.
+ * Bei 2 Minuten ergibt das theoretisch
+ * ungefähr 39 MB.
  */
-const VIDEO_BITRATE = 1800000;
+const VIDEO_BITRATE = 2500000;
 const AUDIO_BITRATE = 96000;
 
 
 /*
- * Sicherheitsgrenze für das fertige Video.
+ * Sicherheitsgrenze für die fertige Videodatei.
  *
- * Wir halten bewusst Abstand zur
- * 50-MB-POST-Grenze von Apps Script,
- * weil Base64 die Daten zusätzlich vergrößert.
+ * Wenn das Video größer ist, wird es nicht
+ * an Google übertragen.
  */
-const MAX_VIDEO_SIZE_MB = 34;
+const MAX_VIDEO_SIZE_MB = 42;
 
 
 /*
- * Maximale Größe des JSON/Base64-Requests.
+ * Sicherheitsgrenze für den gesamten
+ * Base64/JSON-Request.
  *
- * Auch hier bleiben wir bewusst
- * unter der 50-MB-Grenze.
+ * Base64 vergrößert die Datei ungefähr
+ * um ein Drittel.
  */
-const MAX_REQUEST_SIZE_MB = 46;
+const MAX_REQUEST_SIZE_MB = 48;
 
 
 /* =====================================================
@@ -840,7 +840,7 @@ function hideAllScreens() {
 
     document
         .querySelectorAll('.screen')
-        .forEach(screen => {
+        .forEach(function(screen) {
 
             screen.classList.remove('active');
 
@@ -966,21 +966,32 @@ async function openCamera() {
 
 
         /*
-         * Tatsächliche Kameraauflösung
-         * in der Konsole anzeigen.
+         * Tatsächliche Kameraeinstellungen
+         * auslesen.
          */
 
         const videoTrack =
             cameraStream.getVideoTracks()[0];
 
+        const audioTrack =
+            cameraStream.getAudioTracks()[0];
+
+
         if (videoTrack) {
 
-            const settings =
-                videoTrack.getSettings();
+            console.log(
+                "Tatsächliche Video-Einstellungen:",
+                videoTrack.getSettings()
+            );
+
+        }
+
+
+        if (audioTrack) {
 
             console.log(
-                "Kamera-Einstellungen:",
-                settings
+                "Tatsächliche Audio-Einstellungen:",
+                audioTrack.getSettings()
             );
 
         }
@@ -1016,13 +1027,16 @@ async function openCamera() {
 function getReadableError(error) {
 
     if (!error) {
+
         return "Unbekannter Fehler.";
+
     }
 
 
     if (error.name === "NotAllowedError") {
 
-        return "Der Zugriff auf Kamera oder Mikrofon wurde verweigert.";
+        return "Der Zugriff auf Kamera oder Mikrofon wurde verweigert. " +
+               "Bitte erlaubt den Zugriff in den Browser-Einstellungen.";
 
     }
 
@@ -1055,6 +1069,20 @@ function getReadableError(error) {
     }
 
 
+    if (error.name === "AbortError") {
+
+        return "Der Kamerazugriff wurde vom Browser oder Gerät abgebrochen.";
+
+    }
+
+
+    if (error.name === "TypeError") {
+
+        return "Der Browser unterstützt die benötigte Kamera-Funktion nicht vollständig.";
+
+    }
+
+
     return error.message ||
            error.name ||
            "Unbekannter Fehler.";
@@ -1063,7 +1091,7 @@ function getReadableError(error) {
 
 
 /* =====================================================
-   RECORDING START
+   RECORDING
 ===================================================== */
 
 function toggleRecording() {
@@ -1092,7 +1120,7 @@ function startRecording() {
     if (!cameraStream) {
 
         alert(
-            "Die Kamera ist noch nicht bereit. " +
+            "Die Kamera ist noch nicht bereit.\n\n" +
             "Bitte wartet kurz und versucht es erneut."
         );
 
@@ -1126,10 +1154,10 @@ function startRecording() {
 
 
     /*
-     * Unterstützte Formate ermitteln.
+     * Unterstützte Formate suchen.
      *
-     * WebM ist für diesen Upload-Weg
-     * die bevorzugte Variante.
+     * WebM/VP8/Opus ist für diesen
+     * Upload-Weg die bevorzugte Variante.
      */
 
     let mimeType = "";
@@ -1169,7 +1197,7 @@ function startRecording() {
 
 
     /*
-     * Recorder-Optionen
+     * Recorder-Einstellungen
      */
 
     const options = {
@@ -1210,9 +1238,7 @@ function startRecording() {
 
 
         /*
-         * Fallback:
-         * Browser entscheidet nur über den Codec,
-         * Bitrate bleibt trotzdem gesetzt.
+         * Fallback
          */
 
         try {
@@ -1238,8 +1264,10 @@ function startRecording() {
                 secondError
             );
 
+
             alert(
                 "Die Videoaufnahme konnte auf diesem Gerät nicht gestartet werden.\n\n" +
+                "Technischer Fehler:\n" +
                 getReadableError(secondError)
             );
 
@@ -1283,6 +1311,10 @@ function startRecording() {
         };
 
 
+    /*
+     * Fehler während der Aufnahme
+     */
+
     mediaRecorder.onerror =
         function(event) {
 
@@ -1291,11 +1323,28 @@ function startRecording() {
                 event
             );
 
+
+            recording = false;
+
+            stopTimer();
+
+            button.classList.remove(
+                'recording'
+            );
+
+
+            alert(
+                "Während der Aufnahme ist ein Fehler aufgetreten.\n\n" +
+                "Bitte versucht es erneut."
+            );
+
         };
 
 
     /*
-     * Aufnahme starten
+     * Aufnahme starten.
+     *
+     * Alle 1 Sekunde Daten liefern.
      */
 
     mediaRecorder.start(1000);
@@ -1312,7 +1361,11 @@ function startRecording() {
 
 
     console.log(
-        "Aufnahme gestartet"
+        "=============================="
+    );
+
+    console.log(
+        "AUFNAHME GESTARTET"
     );
 
     console.log(
@@ -1328,6 +1381,10 @@ function startRecording() {
     console.log(
         "Audio-Bitrate:",
         mediaRecorder.audioBitsPerSecond
+    );
+
+    console.log(
+        "=============================="
     );
 
 }
@@ -1448,7 +1505,8 @@ function createRecordedVideo() {
     ) {
 
         alert(
-            "Es wurden keine Videodaten aufgenommen."
+            "Es wurden keine Videodaten aufgenommen.\n\n" +
+            "Bitte versucht die Aufnahme erneut."
         );
 
         return;
@@ -1477,20 +1535,31 @@ function createRecordedVideo() {
 
 
     console.log(
-        "Fertige Videodatei:",
+        "=============================="
+    );
+
+    console.log(
+        "FERTIGE VIDEODATEI"
+    );
+
+    console.log(
+        "Größe:",
         sizeMB.toFixed(2),
         "MB"
     );
-
 
     console.log(
         "MIME-Type:",
         mimeType
     );
 
+    console.log(
+        "=============================="
+    );
+
 
     /*
-     * Sicherheitshalber schon hier prüfen.
+     * Sicherheitsprüfung
      */
 
     if (
@@ -1498,10 +1567,14 @@ function createRecordedVideo() {
     ) {
 
         alert(
-            "Die Aufnahme ist mit " +
+            "Die Aufnahme ist zu groß.\n\n" +
+            "Dateigröße: " +
             sizeMB.toFixed(1) +
-            " MB zu groß.\n\n" +
-            "Bitte nehmt eine kürzere Nachricht auf."
+            " MB\n" +
+            "Maximal erlaubt: " +
+            MAX_VIDEO_SIZE_MB +
+            " MB\n\n" +
+            "Bitte nehmt eine etwas kürzere Nachricht auf."
         );
 
         return;
@@ -1530,6 +1603,9 @@ function createRecordedVideo() {
 
     preview.src =
         recordedVideoURL;
+
+
+    preview.load();
 
 
     stopCamera();
@@ -1604,7 +1680,7 @@ function blobToBase64(blob) {
 
                             reject(
                                 new Error(
-                                    "Video konnte nicht verarbeitet werden."
+                                    "Das Video konnte nicht verarbeitet werden."
                                 )
                             );
 
@@ -1623,7 +1699,7 @@ function blobToBase64(blob) {
 
                             reject(
                                 new Error(
-                                    "Ungültige Videodaten."
+                                    "Die Videodaten sind ungültig."
                                 )
                             );
 
@@ -1652,7 +1728,7 @@ function blobToBase64(blob) {
 
                     reject(
                         new Error(
-                            "Das Video konnte nicht in das Upload-Format umgewandelt werden."
+                            "Das Video konnte nicht für den Upload vorbereitet werden."
                         )
                     );
 
@@ -1714,7 +1790,7 @@ async function saveVideo() {
 
         /*
          * -------------------------------------------------
-         * VIDEO-BLOB ERSTELLEN
+         * VIDEO-BLOB
          * -------------------------------------------------
          */
 
@@ -1747,7 +1823,7 @@ async function saveVideo() {
 
         /*
          * -------------------------------------------------
-         * VIDEO-GRÖSSE PRÜFEN
+         * DATEIGRÖSSE PRÜFEN
          * -------------------------------------------------
          */
 
@@ -1761,7 +1837,8 @@ async function saveVideo() {
                 " MB groß. " +
                 "Das erlaubte Maximum beträgt " +
                 MAX_VIDEO_SIZE_MB +
-                " MB. Bitte nehmt eine kürzere Nachricht auf."
+                " MB. " +
+                "Bitte nehmt eine etwas kürzere Nachricht auf."
             );
 
         }
@@ -1784,22 +1861,9 @@ async function saveVideo() {
 
 
         /*
-         * Base64 ist größer als das
-         * ursprüngliche Video.
-         */
-
-        const base64SizeMB =
-            (
-                base64Video.length *
-                0.75
-            ) /
-            1024 /
-            1024;
-
-
-        /*
-         * Tatsächliche JSON-Größe
-         * ungefähr berechnen.
+         * -------------------------------------------------
+         * REQUEST-GRÖSSE BERECHNEN
+         * -------------------------------------------------
          */
 
         const estimatedRequestSize =
@@ -1824,7 +1888,7 @@ async function saveVideo() {
 
 
         console.log(
-            "Geschätzte Uploadgröße:",
+            "Geschätzte Request-Größe:",
             estimatedRequestSizeMB.toFixed(2),
             "MB"
         );
@@ -1886,9 +1950,7 @@ async function saveVideo() {
 
 
         const extension =
-            mimeType.includes(
-                "mp4"
-            )
+            mimeType.includes("mp4")
             ? "mp4"
             : "webm";
 
@@ -1926,8 +1988,8 @@ async function saveVideo() {
                     headers: {
 
                         /*
-                         * text/plain verhindert
-                         * einen zusätzlichen CORS-Preflight.
+                         * text/plain verhindert einen
+                         * zusätzlichen CORS-Preflight.
                          */
 
                         "Content-Type":
@@ -1971,7 +2033,7 @@ async function saveVideo() {
 
         /*
          * -------------------------------------------------
-         * GOOGLE-ANTWORT AUSWERTEN
+         * JSON ANTWORT
          * -------------------------------------------------
          */
 
@@ -2006,7 +2068,7 @@ async function saveVideo() {
 
         /*
          * -------------------------------------------------
-         * GOOGLE SUCCESS PRÜFEN
+         * SUCCESS PRÜFEN
          * -------------------------------------------------
          */
 
@@ -2024,9 +2086,13 @@ async function saveVideo() {
 
         /*
          * -------------------------------------------------
-         * ERFOLGREICH
+         * ERFOLG
          * -------------------------------------------------
          */
+
+        console.log(
+            "=============================="
+        );
 
         console.log(
             "UPLOAD ERFOLGREICH"
@@ -2040,6 +2106,10 @@ async function saveVideo() {
         console.log(
             "Google Drive File ID:",
             result.fileId
+        );
+
+        console.log(
+            "=============================="
         );
 
 
@@ -2060,8 +2130,7 @@ async function saveVideo() {
 
 
         /*
-         * Nach 4 Sekunden
-         * zurück zum Start.
+         * Nach 4 Sekunden zurück zum Start.
          */
 
         setTimeout(
@@ -2088,8 +2157,16 @@ async function saveVideo() {
     catch (error) {
 
         console.error(
+            "=============================="
+        );
+
+        console.error(
             "UPLOAD FEHLER:",
             error
+        );
+
+        console.error(
+            "=============================="
         );
 
 
@@ -2111,7 +2188,7 @@ async function saveVideo() {
 
 
 /* =====================================================
-   UPLOAD-FEHLER ANZEIGEN
+   UPLOAD-FEHLER
 ===================================================== */
 
 function showUploadError(message) {
@@ -2139,22 +2216,27 @@ function showUploadError(message) {
 function escapeHtml(text) {
 
     return String(text)
+
         .replace(
             /&/g,
             "&amp;"
         )
+
         .replace(
             /</g,
             "&lt;"
         )
+
         .replace(
             />/g,
             "&gt;"
         )
+
         .replace(
             /"/g,
             "&quot;"
         )
+
         .replace(
             /'/g,
             "&#039;"
