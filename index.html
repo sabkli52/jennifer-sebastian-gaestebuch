@@ -2340,10 +2340,10 @@ function showUploadError(message) {
 
 
 /* =====================================================
-   BACKUP DOWNLOAD
+   BACKUP DOWNLOAD – PC / ANDROID / IPHONE / IPAD
 ===================================================== */
 
-function downloadBackup() {
+async function downloadBackup() {
 
     if (
         !recordedChunks ||
@@ -2359,101 +2359,347 @@ function downloadBackup() {
     }
 
 
-    const mimeType =
-        mediaRecorder &&
-        mediaRecorder.mimeType
-            ? mediaRecorder.mimeType
-            : "video/webm";
+    try {
+
+        /*
+         * MIME-Typ ermitteln
+         */
+
+        const mimeType =
+            mediaRecorder &&
+            mediaRecorder.mimeType
+                ? mediaRecorder.mimeType
+                : "video/webm";
 
 
-    const blob =
-        new Blob(
-            recordedChunks,
-            {
-                type: mimeType
+        /*
+         * Video aus den aufgenommenen Chunks
+         * wieder zusammensetzen
+         */
+
+        const blob =
+            new Blob(
+                recordedChunks,
+                {
+                    type: mimeType
+                }
+            );
+
+
+        if (
+            !blob ||
+            blob.size === 0
+        ) {
+
+            throw new Error(
+                "Die Videodatei ist leer."
+            );
+
+        }
+
+
+        /*
+         * Dateiname
+         */
+
+        const now =
+            new Date();
+
+
+        const timestamp =
+            now.getFullYear() +
+            "-" +
+            String(
+                now.getMonth() + 1
+            ).padStart(2, "0") +
+            "-" +
+            String(
+                now.getDate()
+            ).padStart(2, "0") +
+            "_" +
+            String(
+                now.getHours()
+            ).padStart(2, "0") +
+            "-" +
+            String(
+                now.getMinutes()
+            ).padStart(2, "0") +
+            "-" +
+            String(
+                now.getSeconds()
+            ).padStart(2, "0");
+
+
+        const extension =
+            mimeType.includes("mp4")
+                ? "mp4"
+                : "webm";
+
+
+        const fileName =
+            "Jennifer-Sebastian-Gaestebuch-" +
+            timestamp +
+            "." +
+            extension;
+
+
+        console.log(
+            "Backup-Datei:",
+            fileName
+        );
+
+        console.log(
+            "Backup-Größe:",
+            (blob.size / 1024 / 1024).toFixed(2),
+            "MB"
+        );
+
+
+        /*
+         * =================================================
+         * IPHONE / IPAD
+         * =================================================
+         *
+         * Wenn navigator.share + File unterstützt werden,
+         * verwenden wir die native iOS-Teilen-Funktion.
+         *
+         * Dort kann der Gast z.B.
+         * "In Dateien sichern" auswählen.
+         */
+
+        if (
+            navigator.share &&
+            typeof File !== "undefined"
+        ) {
+
+            try {
+
+                const file =
+                    new File(
+                        [blob],
+                        fileName,
+                        {
+                            type: mimeType
+                        }
+                    );
+
+
+                /*
+                 * Prüfen, ob der Browser diesen
+                 * Dateityp tatsächlich teilen kann.
+                 */
+
+                if (
+                    !navigator.canShare ||
+                    navigator.canShare({
+                        files: [file]
+                    })
+                ) {
+
+                    await navigator.share({
+
+                        files: [file],
+
+                        title:
+                            "Videobotschaft für Jennifer & Sebastian",
+
+                        text:
+                            "Meine Videobotschaft für Jennifer & Sebastian"
+
+                    });
+
+
+                    document
+                        .getElementById(
+                            'uploadStatus'
+                        )
+                        .textContent =
+                        "Das Video wurde zum Speichern bzw. Teilen bereitgestellt ✓";
+
+
+                    return;
+
+                }
+
             }
-        );
+
+            catch (shareError) {
+
+                /*
+                 * Wenn der Benutzer das Teilen-Fenster
+                 * einfach schließt, soll KEIN Fehler
+                 * angezeigt werden.
+                 */
+
+                if (
+                    shareError &&
+                    shareError.name ===
+                    "AbortError"
+                ) {
+
+                    console.log(
+                        "Teilen vom Benutzer abgebrochen."
+                    );
+
+                    return;
+
+                }
 
 
-    const timestamp =
-        new Date()
-            .toISOString()
-            .replace(
-                /[:.]/g,
-                "-"
+                console.warn(
+                    "Native Dateifreigabe nicht möglich:",
+                    shareError
+                );
+
+            }
+
+        }
+
+
+        /*
+         * =================================================
+         * FALLBACK FÜR PC / ANDROID / ÄLTERE BROWSER
+         * =================================================
+         */
+
+        const url =
+            URL.createObjectURL(
+                blob
             );
 
 
-    const extension =
-        mimeType.includes("mp4")
-            ? "mp4"
-            : "webm";
-
-
-    const fileName =
-        "Jennifer-Sebastian-Gaestebuch-" +
-        timestamp +
-        "." +
-        extension;
-
-
-    const url =
-        URL.createObjectURL(
-            blob
-        );
-
-
-    const link =
-        document.createElement(
-            "a"
-        );
-
-
-    link.href =
-        url;
-
-    link.download =
-        fileName;
-
-    link.style.display =
-        "none";
-
-
-    document.body.appendChild(
-        link
-    );
-
-
-    link.click();
-
-
-    document.body.removeChild(
-        link
-    );
-
-
-    setTimeout(
-        function() {
-
-            URL.revokeObjectURL(
-                url
+        const link =
+            document.createElement(
+                "a"
             );
 
-        },
-        5000
-    );
+
+        link.href =
+            url;
 
 
-    document
-        .getElementById(
-            'uploadStatus'
-        )
-        .textContent =
-        "Das Video wurde zum Speichern auf diesem Gerät bereitgestellt ✓";
+        link.download =
+            fileName;
+
+
+        link.style.display =
+            "none";
+
+
+        document.body.appendChild(
+            link
+        );
+
+
+        link.click();
+
+
+        document.body.removeChild(
+            link
+        );
+
+
+        /*
+         * Object URL erst später freigeben,
+         * damit der Browser genug Zeit hat,
+         * den Download zu starten.
+         */
+
+        setTimeout(
+            function() {
+
+                URL.revokeObjectURL(
+                    url
+                );
+
+            },
+            10000
+        );
+
+
+        document
+            .getElementById(
+                'uploadStatus'
+            )
+            .textContent =
+            "Das Video wurde zum Speichern auf diesem Gerät bereitgestellt ✓";
+
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Backup-Speicherfehler:",
+            error
+        );
+
+
+        /*
+         * Letzter Fallback:
+         * Video direkt in einem neuen Fenster öffnen.
+         *
+         * Besonders auf iOS kann der Benutzer
+         * anschließend über Teilen → In Dateien sichern
+         * speichern.
+         */
+
+        try {
+
+            const fallbackBlob =
+                new Blob(
+                    recordedChunks,
+                    {
+                        type:
+                            (
+                                mediaRecorder &&
+                                mediaRecorder.mimeType
+                            ) ||
+                            "video/webm"
+                    }
+                );
+
+
+            const fallbackURL =
+                URL.createObjectURL(
+                    fallbackBlob
+                );
+
+
+            window.open(
+                fallbackURL,
+                "_blank"
+            );
+
+
+            document
+                .getElementById(
+                    'uploadStatus'
+                )
+                .textContent =
+                "Das Video wurde geöffnet. Über „Teilen“ könnt ihr es auf dem Gerät speichern.";
+
+
+        }
+
+        catch (fallbackError) {
+
+            console.error(
+                "Auch Backup-Fallback fehlgeschlagen:",
+                fallbackError
+            );
+
+
+            alert(
+                "Das Video konnte leider nicht automatisch gespeichert werden. " +
+                "Bitte versucht es erneut."
+            );
+
+        }
+
+    }
 
 }
-
-
 /* =====================================================
    HTML ESCAPEN
 ===================================================== */
