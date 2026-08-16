@@ -2,454 +2,468 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
+
 <meta name="viewport"
       content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
 <title>Forever in October – Jennifer & Sebastian</title>
 
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Montserrat:wght@300;400;500&display=swap');
 
-    :root {
-        --ivory: #f8f4ef;
-        --ivory-dark: #eee6de;
-        --burgundy: #641f32;
-        --burgundy-dark: #481522;
-        --mauve: #9d7782;
-        --rose: #c7a0a8;
-        --plum: #422333;
-        --gold: #b69a68;
-        --white: #fffdf9;
-    }
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Montserrat:wght@300;400;500&display=swap');
 
-    * {
-        box-sizing: border-box;
-        -webkit-tap-highlight-color: transparent;
-    }
+:root {
+    --ivory: #f8f4ef;
+    --ivory-dark: #eee6de;
+    --burgundy: #641f32;
+    --burgundy-dark: #481522;
+    --mauve: #9d7782;
+    --rose: #c7a0a8;
+    --plum: #422333;
+    --gold: #b69a68;
+    --white: #fffdf9;
+}
 
-    html,
-    body {
-        margin: 0;
-        padding: 0;
-        width: 100%;
-        height: 100%;
-        overflow: hidden;
-        background: var(--ivory);
-    }
+* {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
 
-    body {
-        font-family: 'Montserrat', sans-serif;
-        color: var(--plum);
-    }
+html,
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: var(--ivory);
+}
 
-    /* =========================
-       GENERAL
-    ========================= */
+body {
+    font-family: 'Montserrat', sans-serif;
+    color: var(--plum);
+}
 
-    .screen {
-        position: absolute;
-        inset: 0;
-        display: none;
-        width: 100%;
-        height: 100%;
-        overflow: hidden;
-    }
 
-    .screen.active {
-        display: flex;
-    }
+/* =========================
+   GENERAL
+========================= */
 
-    /* WICHTIG:
-       .center darf NICHT display:flex setzen,
-       sonst würden alle Screens gleichzeitig sichtbar.
-    */
+.screen {
+    position: absolute;
+    inset: 0;
+    display: none;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
 
-    .center {
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
-    }
+.screen.active {
+    display: flex;
+}
 
-    /* =========================
-       START SCREEN
-    ========================= */
+.center {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
 
-    #startScreen {
-        background:
-            radial-gradient(
-                circle at 50% 45%,
-                rgba(255,255,255,0.95) 0%,
-                rgba(248,244,239,1) 60%,
-                rgba(238,230,222,1) 100%
-            );
-        padding: 7vh 7vw;
-    }
 
-    .ornament {
-        color: var(--gold);
-        font-size: 22px;
-        letter-spacing: 8px;
-        margin-bottom: 22px;
-    }
+/* =========================
+   START SCREEN
+========================= */
 
-    .names {
-        font-family: 'Cormorant Garamond', serif;
-        font-size: clamp(42px, 7vw, 78px);
-        font-weight: 500;
-        letter-spacing: 1px;
-        color: var(--burgundy);
-        line-height: 0.95;
-    }
+#startScreen {
+    background:
+        radial-gradient(
+            circle at 50% 45%,
+            rgba(255,255,255,0.95) 0%,
+            rgba(248,244,239,1) 60%,
+            rgba(238,230,222,1) 100%
+        );
 
-    .date {
-        margin-top: 14px;
-        font-size: 13px;
-        letter-spacing: 4px;
-        text-transform: uppercase;
-        color: var(--mauve);
-    }
+    padding: 7vh 7vw;
+}
 
-    .gold-line {
-        width: 80px;
-        height: 1px;
-        background: var(--gold);
-        margin: 28px 0;
-    }
+.ornament {
+    color: var(--gold);
+    font-size: 22px;
+    letter-spacing: 8px;
+    margin-bottom: 22px;
+}
 
-    .title {
-        font-family: 'Cormorant Garamond', serif;
-        font-size: clamp(35px, 6vw, 64px);
-        font-weight: 400;
-        font-style: italic;
-        color: var(--plum);
-        line-height: 1;
-    }
+.names {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(42px, 7vw, 78px);
+    font-weight: 500;
+    letter-spacing: 1px;
+    color: var(--burgundy);
+    line-height: 0.95;
+}
 
-    .subtitle {
-        margin-top: 10px;
-        font-size: 11px;
-        letter-spacing: 4px;
-        text-transform: uppercase;
-        color: var(--mauve);
-    }
+.date {
+    margin-top: 14px;
+    font-size: 13px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--mauve);
+}
 
-    .intro {
-        margin-top: 28px;
-        font-family: 'Cormorant Garamond', serif;
-        font-size: 20px;
-        color: var(--plum);
-    }
+.gold-line {
+    width: 80px;
+    height: 1px;
+    background: var(--gold);
+    margin: 28px 0;
+}
+
+.title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(35px, 6vw, 64px);
+    font-weight: 400;
+    font-style: italic;
+    color: var(--plum);
+    line-height: 1;
+}
+
+.subtitle {
+    margin-top: 10px;
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--mauve);
+}
+
+.intro {
+    margin-top: 28px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    color: var(--plum);
+}
+
+.button-container {
+    display: flex;
+    gap: 20px;
+    margin-top: 38px;
+    width: min(800px, 90vw);
+}
+
+.main-button {
+    flex: 1;
+    min-height: 110px;
+    padding: 20px;
+    border: 1px solid rgba(182,154,104,0.7);
+    border-radius: 2px;
+    background: rgba(255,253,249,0.7);
+    color: var(--burgundy);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    line-height: 1.6;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.main-button:active {
+    transform: scale(0.97);
+    background: var(--burgundy);
+    color: white;
+}
+
+.button-icon {
+    display: block;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 35px;
+    margin-bottom: 8px;
+    color: var(--gold);
+}
+
+
+/* =========================
+   MESSAGE SCREEN
+========================= */
+
+#messageScreen {
+    background: var(--ivory);
+    padding: 5vh 6vw;
+}
+
+.small-heading {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    color: var(--mauve);
+    margin-bottom: 12px;
+}
+
+.large-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(35px, 6vw, 58px);
+    font-weight: 400;
+    color: var(--burgundy);
+    margin: 0;
+}
+
+.question {
+    max-width: 650px;
+    margin-top: 15px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 21px;
+    line-height: 1.4;
+}
+
+
+/* =========================
+   CAMERA SCREEN
+========================= */
+
+#cameraScreen {
+    background: #160b10;
+    color: white;
+    flex-direction: column;
+}
+
+.camera-header {
+    position: absolute;
+    top: 20px;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    text-align: center;
+}
+
+.camera-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 25px;
+}
+
+.timer {
+    margin-top: 5px;
+    font-size: 13px;
+    letter-spacing: 2px;
+    opacity: 0.8;
+}
+
+#cameraPreview {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    background: #160b10;
+}
+
+.camera-controls {
+    position: absolute;
+    bottom: 35px;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    z-index: 20;
+}
+
+.record-button {
+    width: 85px;
+    height: 85px;
+    border-radius: 50%;
+    border: 6px solid rgba(255,255,255,0.8);
+    background: #9b2744;
+    box-shadow: 0 0 0 2px rgba(182,154,104,0.8);
+    cursor: pointer;
+}
+
+.record-button.recording {
+    background: #481522;
+}
+
+.record-button-inner {
+    width: 28px;
+    height: 28px;
+    background: white;
+    border-radius: 50%;
+    margin: auto;
+}
+
+.recording .record-button-inner {
+    border-radius: 3px;
+}
+
+.camera-error {
+    position: absolute;
+    inset: 0;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 30px;
+    background: var(--plum);
+    z-index: 50;
+}
+
+.camera-error.active {
+    display: flex;
+}
+
+.error-content {
+    max-width: 500px;
+}
+
+
+/* =========================
+   REVIEW SCREEN
+========================= */
+
+#reviewScreen {
+    background: var(--ivory);
+    padding: 5vh 5vw;
+}
+
+#recordedVideo {
+    max-width: 80vw;
+    max-height: 55vh;
+    margin-top: 25px;
+    background: black;
+    border-radius: 3px;
+    box-shadow: 0 10px 40px rgba(50,20,30,0.15);
+}
+
+.review-buttons {
+    display: flex;
+    gap: 15px;
+    margin-top: 25px;
+}
+
+.secondary-button,
+.primary-button {
+    min-width: 190px;
+    padding: 16px 24px;
+    border-radius: 2px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px;
+    letter-spacing: 2px;
+    cursor: pointer;
+}
+
+.secondary-button {
+    border: 1px solid var(--gold);
+    background: transparent;
+    color: var(--burgundy);
+}
+
+.primary-button {
+    border: 1px solid var(--burgundy);
+    background: var(--burgundy);
+    color: white;
+}
+
+.primary-button:disabled {
+    cursor: wait;
+}
+
+
+/* =========================
+   THANK YOU
+========================= */
+
+#thankYouScreen {
+    background: var(--ivory);
+    padding: 10vw;
+}
+
+.thank-you {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(42px, 7vw, 70px);
+    color: var(--burgundy);
+    font-style: italic;
+}
+
+.thank-text {
+    margin-top: 20px;
+    max-width: 550px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 23px;
+    line-height: 1.5;
+}
+
+
+/* =========================
+   BRIDE & GROOM VIDEO
+========================= */
+
+#brideVideoScreen {
+    background: var(--ivory);
+    padding: 4vh 5vw;
+}
+
+#brideVideo {
+    max-width: 85vw;
+    max-height: 65vh;
+    margin-top: 25px;
+    background: black;
+}
+
+.back-button {
+    margin-top: 20px;
+    border: none;
+    background: transparent;
+    color: var(--mauve);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+
+/* =========================
+   UPLOAD STATUS
+========================= */
+
+.upload-status {
+    margin-top: 15px;
+    font-size: 12px;
+    color: var(--mauve);
+    min-height: 18px;
+    text-align: center;
+}
+
+
+/* =========================
+   MOBILE / PORTRAIT
+========================= */
+
+@media (orientation: portrait) {
 
     .button-container {
-        display: flex;
-        gap: 20px;
-        margin-top: 38px;
-        width: min(800px, 90vw);
+        flex-direction: column;
+        width: min(500px, 85vw);
     }
 
     .main-button {
-        flex: 1;
-        min-height: 110px;
-        padding: 20px;
-        border: 1px solid rgba(182,154,104,0.7);
-        border-radius: 2px;
-        background: rgba(255,253,249,0.7);
-        color: var(--burgundy);
-        font-family: 'Montserrat', sans-serif;
-        font-size: 12px;
-        font-weight: 500;
-        letter-spacing: 2px;
-        line-height: 1.6;
-        cursor: pointer;
-        transition: all 0.25s ease;
+        min-height: 100px;
     }
 
-    .main-button:active {
-        transform: scale(0.97);
-        background: var(--burgundy);
-        color: white;
-    }
-
-    .button-icon {
-        display: block;
-        font-family: 'Cormorant Garamond', serif;
-        font-size: 35px;
-        margin-bottom: 8px;
-        color: var(--gold);
-    }
-
-    /* =========================
-       MESSAGE SCREEN
-    ========================= */
-
-    #messageScreen {
-        background: var(--ivory);
-        padding: 5vh 6vw;
-    }
-
-    .small-heading {
-        font-size: 10px;
-        text-transform: uppercase;
-        letter-spacing: 4px;
-        color: var(--mauve);
-        margin-bottom: 12px;
-    }
-
-    .large-heading {
-        font-family: 'Cormorant Garamond', serif;
-        font-size: clamp(35px, 6vw, 58px);
-        font-weight: 400;
-        color: var(--burgundy);
-        margin: 0;
-    }
-
-    .question {
-        max-width: 650px;
-        margin-top: 15px;
-        font-family: 'Cormorant Garamond', serif;
-        font-size: 21px;
-        line-height: 1.4;
-    }
-
-    /* =========================
-       CAMERA SCREEN
-    ========================= */
-
-    #cameraScreen {
-        background: #160b10;
-        color: white;
-        flex-direction: column;
-    }
-
-    .camera-header {
-        position: absolute;
-        top: 20px;
-        left: 0;
-        right: 0;
-        z-index: 10;
-        text-align: center;
-    }
-
-    .camera-title {
-        font-family: 'Cormorant Garamond', serif;
-        font-size: 25px;
-    }
-
-    .timer {
-        margin-top: 5px;
-        font-size: 13px;
-        letter-spacing: 2px;
-        opacity: 0.8;
-    }
-
-    #cameraPreview {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        background: #160b10;
-    }
-
-    .camera-controls {
-        position: absolute;
-        bottom: 35px;
-        left: 0;
-        right: 0;
-        display: flex;
-        justify-content: center;
-        z-index: 20;
-    }
-
-    .record-button {
-        width: 85px;
-        height: 85px;
-        border-radius: 50%;
-        border: 6px solid rgba(255,255,255,0.8);
-        background: #9b2744;
-        box-shadow: 0 0 0 2px rgba(182,154,104,0.8);
-        cursor: pointer;
-    }
-
-    .record-button.recording {
-        background: #481522;
-    }
-
-    .record-button-inner {
-        width: 28px;
-        height: 28px;
-        background: white;
-        border-radius: 50%;
-        margin: auto;
-    }
-
-    .recording .record-button-inner {
-        border-radius: 3px;
-    }
-
-    .camera-error {
-        position: absolute;
-        inset: 0;
-        display: none;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
-        padding: 30px;
-        background: var(--plum);
-        z-index: 50;
-    }
-
-    .camera-error.active {
-        display: flex;
-    }
-
-    .error-content {
-        max-width: 500px;
-    }
-
-    /* =========================
-       REVIEW SCREEN
-    ========================= */
-
-    #reviewScreen {
-        background: var(--ivory);
-        padding: 5vh 5vw;
-    }
-
-    #recordedVideo {
-        max-width: 80vw;
-        max-height: 55vh;
-        margin-top: 25px;
-        background: black;
-        border-radius: 3px;
-        box-shadow: 0 10px 40px rgba(50,20,30,0.15);
+    .intro {
+        font-size: 18px;
     }
 
     .review-buttons {
-        display: flex;
-        gap: 15px;
-        margin-top: 25px;
+        flex-direction: column;
     }
 
     .secondary-button,
     .primary-button {
-        min-width: 190px;
-        padding: 16px 24px;
-        border-radius: 2px;
-        font-family: 'Montserrat', sans-serif;
-        font-size: 11px;
-        letter-spacing: 2px;
-        cursor: pointer;
+        width: 80vw;
     }
 
-    .secondary-button {
-        border: 1px solid var(--gold);
-        background: transparent;
-        color: var(--burgundy);
-    }
+}
 
-    .primary-button {
-        border: 1px solid var(--burgundy);
-        background: var(--burgundy);
-        color: white;
-    }
-
-    /* =========================
-       THANK YOU
-    ========================= */
-
-    #thankYouScreen {
-        background: var(--ivory);
-        padding: 10vw;
-    }
-
-    .thank-you {
-        font-family: 'Cormorant Garamond', serif;
-        font-size: clamp(42px, 7vw, 70px);
-        color: var(--burgundy);
-        font-style: italic;
-    }
-
-    .thank-text {
-        margin-top: 20px;
-        max-width: 550px;
-        font-family: 'Cormorant Garamond', serif;
-        font-size: 23px;
-        line-height: 1.5;
-    }
-
-    /* =========================
-       BRIDAL VIDEO
-    ========================= */
-
-    #brideVideoScreen {
-        background: var(--ivory);
-        padding: 4vh 5vw;
-    }
-
-    #brideVideo {
-        max-width: 85vw;
-        max-height: 65vh;
-        margin-top: 25px;
-        background: black;
-    }
-
-    .back-button {
-        margin-top: 20px;
-        border: none;
-        background: transparent;
-        color: var(--mauve);
-        font-family: 'Montserrat', sans-serif;
-        font-size: 11px;
-        letter-spacing: 2px;
-        text-transform: uppercase;
-        cursor: pointer;
-    }
-
-    /* =========================
-       UPLOAD STATUS
-    ========================= */
-
-    .upload-status {
-        margin-top: 15px;
-        font-size: 12px;
-        color: var(--mauve);
-        min-height: 18px;
-        text-align: center;
-    }
-
-    /* =========================
-       MOBILE / PORTRAIT
-    ========================= */
-
-    @media (orientation: portrait) {
-
-        .button-container {
-            flex-direction: column;
-            width: min(500px, 85vw);
-        }
-
-        .main-button {
-            min-height: 100px;
-        }
-
-        .intro {
-            font-size: 18px;
-        }
-
-        .review-buttons {
-            flex-direction: column;
-        }
-
-        .secondary-button,
-        .primary-button {
-            width: 80vw;
-        }
-    }
 </style>
 </head>
 
 
 <body>
+
 
 <!-- =====================================================
      START SCREEN
@@ -483,16 +497,25 @@
 
     <div class="button-container">
 
-        <button class="main-button" onclick="startCamera()">
+        <button class="main-button"
+                onclick="startCamera()">
+
             <span class="button-icon">♡</span>
+
             HINTERLASST UNS<br>
             EINE VIDEOBOTSCHAFT
+
         </button>
 
-        <button class="main-button" onclick="showBrideVideo()">
+
+        <button class="main-button"
+                onclick="showBrideVideo()">
+
             <span class="button-icon">✦</span>
+
             EIN KLEINER GRUSS<br>
             VOM BRAUTPAAR
+
         </button>
 
     </div>
@@ -504,7 +527,8 @@
      MESSAGE INTRO
 ===================================================== -->
 
-<section id="messageScreen" class="screen center">
+<section id="messageScreen"
+         class="screen center">
 
     <div class="small-heading">
         Forever in October
@@ -515,18 +539,26 @@
     </h1>
 
     <div class="question">
+
         Was möchtet ihr Jennifer & Sebastian
         für ihren gemeinsamen Weg mitgeben?
+
     </div>
 
     <div class="gold-line"></div>
 
-    <button class="primary-button" onclick="startCameraDirectly()">
+    <button class="primary-button"
+            onclick="startCameraDirectly()">
+
         ♡ AUFNAHME STARTEN
+
     </button>
 
-    <button class="back-button" onclick="showStart()">
+    <button class="back-button"
+            onclick="showStart()">
+
         Zurück zum Gästebuch
+
     </button>
 
 </section>
@@ -536,7 +568,8 @@
      CAMERA SCREEN
 ===================================================== -->
 
-<section id="cameraScreen" class="screen">
+<section id="cameraScreen"
+         class="screen">
 
     <div class="camera-header">
 
@@ -544,16 +577,21 @@
             Eure Videobotschaft
         </div>
 
-        <div class="timer" id="timer">
+        <div class="timer"
+             id="timer">
+
             00:00 / 10:00
+
         </div>
 
     </div>
+
 
     <video id="cameraPreview"
            autoplay
            muted
            playsinline></video>
+
 
     <div class="camera-controls">
 
@@ -567,7 +605,9 @@
 
     </div>
 
-    <div id="cameraError" class="camera-error">
+
+    <div id="cameraError"
+         class="camera-error">
 
         <div class="error-content">
 
@@ -586,7 +626,9 @@
 
             <button class="primary-button"
                     onclick="showStart()">
+
                 ZURÜCK
+
             </button>
 
         </div>
@@ -600,7 +642,8 @@
      REVIEW SCREEN
 ===================================================== -->
 
-<section id="reviewScreen" class="screen center">
+<section id="reviewScreen"
+         class="screen center">
 
     <div class="small-heading">
         Eure Erinnerung
@@ -610,26 +653,37 @@
         Sieht gut aus?
     </h1>
 
+
     <video id="recordedVideo"
            controls
            playsinline></video>
+
 
     <div class="review-buttons">
 
         <button class="secondary-button"
                 onclick="recordAgain()">
+
             ↻ NEU AUFNEHMEN
+
         </button>
+
 
         <button class="primary-button"
                 id="uploadButton"
                 onclick="saveVideo()">
+
             ♡ BOTSCHAFT ABSCHICKEN
+
         </button>
 
     </div>
 
-    <div id="uploadStatus" class="upload-status"></div>
+
+    <div id="uploadStatus"
+         class="upload-status">
+
+    </div>
 
 </section>
 
@@ -638,20 +692,29 @@
      THANK YOU SCREEN
 ===================================================== -->
 
-<section id="thankYouScreen" class="screen center">
+<section id="thankYouScreen"
+         class="screen center">
 
-    <div class="ornament">✦</div>
+    <div class="ornament">
+        ✦
+    </div>
+
 
     <div class="thank-you">
         Danke für eure Nachricht
     </div>
 
+
     <div class="thank-text">
+
         Eure Worte werden für immer Teil
         unserer Geschichte sein.
+
     </div>
 
+
     <div class="gold-line"></div>
+
 
     <div>
         Jennifer & Sebastian
@@ -664,15 +727,20 @@
      BRIDE & GROOM VIDEO
 ===================================================== -->
 
-<section id="brideVideoScreen" class="screen center">
+<section id="brideVideoScreen"
+         class="screen center">
 
     <div class="small-heading">
         Eine Nachricht vom Brautpaar
     </div>
 
+
     <h1 class="large-heading">
+
         Das Brautpaar hat euch etwas zu sagen …
+
     </h1>
+
 
     <video id="brideVideo"
            controls
@@ -686,6 +754,7 @@
 
     </video>
 
+
     <button class="back-button"
             onclick="showStart()">
 
@@ -696,32 +765,39 @@
 </section>
 
 
+
 <script>
+
 
 /* =====================================================
    VARIABLES
 ===================================================== */
 
 let cameraStream = null;
+
 let mediaRecorder = null;
+
 let recordedChunks = [];
+
 let recordedVideoURL = null;
 
 let recording = false;
+
 let timerInterval = null;
+
 let recordingSeconds = 0;
 
 
 /* =====================================================
    MAXIMALE AUFNAHMEZEIT
-   10 MINUTEN = 600 SEKUNDEN
+   10 MINUTEN
 ===================================================== */
 
 const MAX_RECORDING_TIME = 600;
 
 
 /* =====================================================
-   GOOGLE APPS SCRIPT
+   GOOGLE APPS SCRIPT URL
 ===================================================== */
 
 const GOOGLE_SCRIPT_URL =
@@ -734,9 +810,12 @@ const GOOGLE_SCRIPT_URL =
 
 function hideAllScreens() {
 
-    document.querySelectorAll('.screen')
+    document
+        .querySelectorAll('.screen')
         .forEach(screen => {
+
             screen.classList.remove('active');
+
         });
 
 }
@@ -795,30 +874,38 @@ async function openCamera() {
     const error =
         document.getElementById('cameraError');
 
+
     try {
 
         error.classList.remove('active');
+
 
         cameraStream =
             await navigator.mediaDevices.getUserMedia({
 
                 video: {
+
                     facingMode: "user",
+
                     width: {
                         ideal: 1280
                     },
+
                     height: {
                         ideal: 720
                     }
+
                 },
 
                 audio: true
 
             });
 
+
         video.srcObject = cameraStream;
 
         await video.play();
+
 
     }
 
@@ -843,7 +930,9 @@ function toggleRecording() {
 
         startRecording();
 
-    } else {
+    }
+
+    else {
 
         stopRecording();
 
@@ -855,17 +944,23 @@ function toggleRecording() {
 function startRecording() {
 
     if (!cameraStream) {
+
         return;
+
     }
+
 
     recordedChunks = [];
 
     recordingSeconds = 0;
 
+
     const button =
         document.getElementById('recordButton');
 
+
     let options = {};
+
 
     if (
         MediaRecorder.isTypeSupported(
@@ -874,7 +969,10 @@ function startRecording() {
     ) {
 
         options = {
-            mimeType: 'video/webm;codecs=vp8,opus'
+
+            mimeType:
+                'video/webm;codecs=vp8,opus'
+
         };
 
     }
@@ -886,10 +984,14 @@ function startRecording() {
     ) {
 
         options = {
-            mimeType: 'video/mp4'
+
+            mimeType:
+                'video/mp4'
+
         };
 
     }
+
 
     try {
 
@@ -903,8 +1005,12 @@ function startRecording() {
 
     catch (error) {
 
+        console.error(error);
+
         mediaRecorder =
-            new MediaRecorder(cameraStream);
+            new MediaRecorder(
+                cameraStream
+            );
 
     }
 
@@ -912,10 +1018,14 @@ function startRecording() {
     mediaRecorder.ondataavailable =
         function(event) {
 
-            if (event.data &&
-                event.data.size > 0) {
+            if (
+                event.data &&
+                event.data.size > 0
+            ) {
 
-                recordedChunks.push(event.data);
+                recordedChunks.push(
+                    event.data
+                );
 
             }
 
@@ -947,20 +1057,25 @@ function startRecording() {
 
 function stopRecording() {
 
-    if (!mediaRecorder ||
-        mediaRecorder.state === 'inactive') {
+    if (
+        !mediaRecorder ||
+        mediaRecorder.state === 'inactive'
+    ) {
 
         return;
 
     }
 
+
     mediaRecorder.stop();
 
     recording = false;
 
+
     document
         .getElementById('recordButton')
         .classList.remove('recording');
+
 
     stopTimer();
 
@@ -975,12 +1090,14 @@ function startTimer() {
 
     updateTimer();
 
+
     timerInterval =
         setInterval(function() {
 
             recordingSeconds++;
 
             updateTimer();
+
 
             if (
                 recordingSeconds >=
@@ -1008,14 +1125,20 @@ function stopTimer() {
 function updateTimer() {
 
     const minutes =
-        Math.floor(recordingSeconds / 60)
-            .toString()
-            .padStart(2, '0');
+        Math.floor(
+            recordingSeconds / 60
+        )
+        .toString()
+        .padStart(2, '0');
+
 
     const seconds =
-        (recordingSeconds % 60)
-            .toString()
-            .padStart(2, '0');
+        (
+            recordingSeconds % 60
+        )
+        .toString()
+        .padStart(2, '0');
+
 
     document
         .getElementById('timer')
@@ -1034,6 +1157,7 @@ function createRecordedVideo() {
     let mimeType =
         mediaRecorder.mimeType ||
         'video/webm';
+
 
     const blob =
         new Blob(
@@ -1062,14 +1186,15 @@ function createRecordedVideo() {
             'recordedVideo'
         );
 
+
     preview.src =
         recordedVideoURL;
 
 
     stopCamera();
 
-
     hideAllScreens();
+
 
     document
         .getElementById('reviewScreen')
@@ -1094,9 +1219,14 @@ function recordAgain() {
 
     }
 
+
     recordedChunks = [];
 
-    document.getElementById('uploadStatus').textContent = "";
+
+    document
+        .getElementById('uploadStatus')
+        .textContent = "";
+
 
     startCameraDirectly();
 
@@ -1104,31 +1234,52 @@ function recordAgain() {
 
 
 /* =====================================================
-   VIDEO ALS BASE64 KONVERTIEREN
+   BLOB → BASE64
 ===================================================== */
 
 function blobToBase64(blob) {
 
-    return new Promise((resolve, reject) => {
+    return new Promise(
+        (resolve, reject) => {
 
-        const reader = new FileReader();
+            const reader =
+                new FileReader();
 
-        reader.onloadend = function() {
 
-            const result = reader.result;
+            reader.onloadend =
+                function() {
 
-            const base64 =
-                result.split(',')[1];
+                    try {
 
-            resolve(base64);
+                        const result =
+                            reader.result;
 
-        };
 
-        reader.onerror = reject;
+                        const base64 =
+                            result.split(',')[1];
 
-        reader.readAsDataURL(blob);
 
-    });
+                        resolve(base64);
+
+                    }
+
+                    catch (error) {
+
+                        reject(error);
+
+                    }
+
+                };
+
+
+            reader.onerror =
+                reject;
+
+
+            reader.readAsDataURL(blob);
+
+        }
+    );
 
 }
 
@@ -1147,21 +1298,31 @@ async function saveVideo() {
 
 
     const button =
-        document.getElementById('uploadButton');
+        document.getElementById(
+            'uploadButton'
+        );
+
 
     const status =
-        document.getElementById('uploadStatus');
+        document.getElementById(
+            'uploadStatus'
+        );
 
 
     button.disabled = true;
 
     button.style.opacity = "0.6";
 
+
     status.textContent =
         "Eure Nachricht wird gespeichert …";
 
 
     try {
+
+        /*
+         * Video-Blob erzeugen
+         */
 
         const mimeType =
             mediaRecorder.mimeType ||
@@ -1178,17 +1339,53 @@ async function saveVideo() {
 
 
         /*
-         * Video in Base64 umwandeln,
-         * damit es an Google Apps Script
-         * übertragen werden kann.
+         * Größe anzeigen
          */
+
+        const sizeMB =
+            blob.size /
+            1024 /
+            1024;
+
+
+        console.log(
+            "Videogröße:",
+            sizeMB.toFixed(2),
+            "MB"
+        );
+
+
+        /*
+         * Google Apps Script hat
+         * eine POST-Grenze von ca. 50 MB.
+         *
+         * Deshalb brechen wir hier
+         * bei zu großen Dateien ab.
+         */
+
+        if (sizeMB > 45) {
+
+            throw new Error(
+                "Das Video ist zu groß. Bitte nehmt eine kürzere Nachricht auf."
+            );
+
+        }
+
+
+        /*
+         * Video in Base64 umwandeln
+         */
+
+        status.textContent =
+            "Video wird vorbereitet …";
+
 
         const base64Video =
             await blobToBase64(blob);
 
 
         /*
-         * Zeitstempel für Dateinamen
+         * Zeitstempel
          */
 
         const now =
@@ -1198,28 +1395,41 @@ async function saveVideo() {
         const timestamp =
             now.getFullYear() +
             "-" +
-            String(now.getMonth() + 1).padStart(2, "0") +
+            String(
+                now.getMonth() + 1
+            ).padStart(2, "0") +
             "-" +
-            String(now.getDate()).padStart(2, "0") +
+            String(
+                now.getDate()
+            ).padStart(2, "0") +
             "_" +
-            String(now.getHours()).padStart(2, "0") +
+            String(
+                now.getHours()
+            ).padStart(2, "0") +
             "-" +
-            String(now.getMinutes()).padStart(2, "0") +
+            String(
+                now.getMinutes()
+            ).padStart(2, "0") +
             "-" +
-            String(now.getSeconds()).padStart(2, "0");
+            String(
+                now.getSeconds()
+            ).padStart(2, "0");
 
 
         /*
          * Dateiendung
          */
 
-        let extension = "webm";
+        let extension =
+            "webm";
+
 
         if (
             mimeType.includes("mp4")
         ) {
 
-            extension = "mp4";
+            extension =
+                "mp4";
 
         }
 
@@ -1232,8 +1442,20 @@ async function saveVideo() {
 
 
         /*
-         * Upload an Google Apps Script
+         * WICHTIG:
+         *
+         * Diese Feldnamen müssen exakt
+         * mit dem Google Apps Script
+         * übereinstimmen:
+         *
+         * fileName
+         * mimeType
+         * file
          */
+
+        status.textContent =
+            "Nachricht wird hochgeladen …";
+
 
         const response =
             await fetch(
@@ -1243,44 +1465,99 @@ async function saveVideo() {
                     method: "POST",
 
                     headers: {
+
                         "Content-Type":
                             "text/plain;charset=utf-8"
+
                     },
 
-                    body: JSON.stringify({
+                    body:
+                        JSON.stringify({
 
-                        filename:
-                            fileName,
+                            fileName:
+                                fileName,
 
-                        mimeType:
-                            mimeType,
+                            mimeType:
+                                mimeType,
 
-                        data:
-                            base64Video
+                            file:
+                                base64Video
 
-                    })
+                        })
 
                 }
             );
 
 
-        const result =
+        const responseText =
             await response.text();
 
 
         console.log(
             "Google Apps Script Antwort:",
-            result
+            responseText
         );
 
 
         /*
-         * Wenn die Anfrage erfolgreich
-         * an Google gesendet wurde,
-         * zeigen wir die Danke-Seite.
+         * Antwort von Google auswerten
          */
 
+        let result;
+
+
+        try {
+
+            result =
+                JSON.parse(
+                    responseText
+                );
+
+        }
+
+        catch (parseError) {
+
+            throw new Error(
+                "Ungültige Antwort von Google Apps Script: " +
+                responseText
+            );
+
+        }
+
+
+        /*
+         * Nur wenn Google success:true
+         * meldet, geht es weiter.
+         */
+
+        if (
+            !result.success
+        ) {
+
+            throw new Error(
+                result.error ||
+                "Google Drive konnte das Video nicht speichern."
+            );
+
+        }
+
+
+        /*
+         * ERFOLGREICH
+         */
+
+        console.log(
+            "Video erfolgreich gespeichert:",
+            result.fileName
+        );
+
+
+        status.textContent =
+            "Gespeichert ✓";
+
+
         hideAllScreens();
+
 
         document
             .getElementById('thankYouScreen')
@@ -1288,21 +1565,27 @@ async function saveVideo() {
 
 
         /*
-         * Nach 4 Sekunden wieder
-         * zur Startseite
+         * Nach 4 Sekunden
+         * zurück zum Start
          */
 
-        setTimeout(function() {
+        setTimeout(
+            function() {
 
-            showStart();
+                showStart();
 
-            button.disabled = false;
+                button.disabled =
+                    false;
 
-            button.style.opacity = "1";
+                button.style.opacity =
+                    "1";
 
-            status.textContent = "";
+                status.textContent =
+                    "";
 
-        }, 4000);
+            },
+            4000
+        );
 
 
     }
@@ -1319,9 +1602,12 @@ async function saveVideo() {
             "Die Nachricht konnte leider nicht gespeichert werden. Bitte versucht es noch einmal.";
 
 
-        button.disabled = false;
+        button.disabled =
+            false;
 
-        button.style.opacity = "1";
+
+        button.style.opacity =
+            "1";
 
     }
 
@@ -1338,9 +1624,12 @@ function stopCamera() {
 
         cameraStream
             .getTracks()
-            .forEach(track => {
-                track.stop();
-            });
+            .forEach(
+                track => {
+                    track.stop();
+                }
+            );
+
 
         cameraStream = null;
 
@@ -1357,17 +1646,21 @@ function showBrideVideo() {
 
     hideAllScreens();
 
+
     const screen =
         document.getElementById(
             'brideVideoScreen'
         );
 
+
     screen.classList.add('active');
+
 
     const video =
         document.getElementById(
             'brideVideo'
         );
+
 
     video.currentTime = 0;
 
@@ -1376,11 +1669,14 @@ function showBrideVideo() {
 
 function brideVideoFinished() {
 
-    setTimeout(function() {
+    setTimeout(
+        function() {
 
-        showStart();
+            showStart();
 
-    }, 1500);
+        },
+        1500
+    );
 
 }
 
@@ -1396,7 +1692,9 @@ async function requestWakeLock() {
 
     try {
 
-        if ('wakeLock' in navigator) {
+        if (
+            'wakeLock' in navigator
+        ) {
 
             wakeLock =
                 await navigator.wakeLock.request(
