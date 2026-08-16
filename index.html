@@ -406,6 +406,18 @@
     }
 
     /* =========================
+       UPLOAD STATUS
+    ========================= */
+
+    .upload-status {
+        margin-top: 15px;
+        font-size: 12px;
+        color: var(--mauve);
+        min-height: 18px;
+        text-align: center;
+    }
+
+    /* =========================
        MOBILE / PORTRAIT
     ========================= */
 
@@ -527,13 +539,15 @@
 <section id="cameraScreen" class="screen">
 
     <div class="camera-header">
+
         <div class="camera-title">
             Eure Videobotschaft
         </div>
 
         <div class="timer" id="timer">
-            00:00 / 01:00
+            00:00 / 10:00
         </div>
+
     </div>
 
     <video id="cameraPreview"
@@ -608,11 +622,14 @@
         </button>
 
         <button class="primary-button"
+                id="uploadButton"
                 onclick="saveVideo()">
             ♡ BOTSCHAFT ABSCHICKEN
         </button>
 
     </div>
+
+    <div id="uploadStatus" class="upload-status"></div>
 
 </section>
 
@@ -626,7 +643,7 @@
     <div class="ornament">✦</div>
 
     <div class="thank-you">
-        Thank you, darlings.
+        Danke für eure Nachricht
     </div>
 
     <div class="thank-text">
@@ -650,7 +667,7 @@
 <section id="brideVideoScreen" class="screen center">
 
     <div class="small-heading">
-        A little message from us
+        Eine Nachricht vom Brautpaar
     </div>
 
     <h1 class="large-heading">
@@ -681,6 +698,10 @@
 
 <script>
 
+/* =====================================================
+   VARIABLES
+===================================================== */
+
 let cameraStream = null;
 let mediaRecorder = null;
 let recordedChunks = [];
@@ -690,7 +711,21 @@ let recording = false;
 let timerInterval = null;
 let recordingSeconds = 0;
 
-const MAX_RECORDING_TIME = 60;
+
+/* =====================================================
+   MAXIMALE AUFNAHMEZEIT
+   10 MINUTEN = 600 SEKUNDEN
+===================================================== */
+
+const MAX_RECORDING_TIME = 600;
+
+
+/* =====================================================
+   GOOGLE APPS SCRIPT
+===================================================== */
+
+const GOOGLE_SCRIPT_URL =
+    "https://script.google.com/macros/s/AKfycbwinEO2disEmNZyuqr6o4vZMCzNDqKotcNj2FCXB3Bi43Bhg8rMbR-hAAT6_q41P2F1/exec";
 
 
 /* =====================================================
@@ -703,6 +738,7 @@ function hideAllScreens() {
         .forEach(screen => {
             screen.classList.remove('active');
         });
+
 }
 
 
@@ -715,6 +751,7 @@ function showStart() {
     document
         .getElementById('startScreen')
         .classList.add('active');
+
 }
 
 
@@ -729,6 +766,7 @@ function startCamera() {
     document
         .getElementById('messageScreen')
         .classList.add('active');
+
 }
 
 
@@ -741,6 +779,7 @@ function startCameraDirectly() {
         .classList.add('active');
 
     openCamera();
+
 }
 
 
@@ -981,7 +1020,7 @@ function updateTimer() {
     document
         .getElementById('timer')
         .textContent =
-        `${minutes}:${seconds} / 01:00`;
+        `${minutes}:${seconds} / 10:00`;
 
 }
 
@@ -1057,29 +1096,234 @@ function recordAgain() {
 
     recordedChunks = [];
 
+    document.getElementById('uploadStatus').textContent = "";
+
     startCameraDirectly();
 
 }
 
 
 /* =====================================================
-   SAVE VIDEO
+   VIDEO ALS BASE64 KONVERTIEREN
 ===================================================== */
 
-function saveVideo() {
+function blobToBase64(blob) {
 
-    hideAllScreens();
+    return new Promise((resolve, reject) => {
 
-    document
-        .getElementById('thankYouScreen')
-        .classList.add('active');
+        const reader = new FileReader();
+
+        reader.onloadend = function() {
+
+            const result = reader.result;
+
+            const base64 =
+                result.split(',')[1];
+
+            resolve(base64);
+
+        };
+
+        reader.onerror = reject;
+
+        reader.readAsDataURL(blob);
+
+    });
+
+}
 
 
-    setTimeout(function() {
+/* =====================================================
+   SAVE / UPLOAD VIDEO
+===================================================== */
 
-        showStart();
+async function saveVideo() {
 
-    }, 4000);
+    if (!recordedChunks.length) {
+
+        return;
+
+    }
+
+
+    const button =
+        document.getElementById('uploadButton');
+
+    const status =
+        document.getElementById('uploadStatus');
+
+
+    button.disabled = true;
+
+    button.style.opacity = "0.6";
+
+    status.textContent =
+        "Eure Nachricht wird gespeichert …";
+
+
+    try {
+
+        const mimeType =
+            mediaRecorder.mimeType ||
+            "video/webm";
+
+
+        const blob =
+            new Blob(
+                recordedChunks,
+                {
+                    type: mimeType
+                }
+            );
+
+
+        /*
+         * Video in Base64 umwandeln,
+         * damit es an Google Apps Script
+         * übertragen werden kann.
+         */
+
+        const base64Video =
+            await blobToBase64(blob);
+
+
+        /*
+         * Zeitstempel für Dateinamen
+         */
+
+        const now =
+            new Date();
+
+
+        const timestamp =
+            now.getFullYear() +
+            "-" +
+            String(now.getMonth() + 1).padStart(2, "0") +
+            "-" +
+            String(now.getDate()).padStart(2, "0") +
+            "_" +
+            String(now.getHours()).padStart(2, "0") +
+            "-" +
+            String(now.getMinutes()).padStart(2, "0") +
+            "-" +
+            String(now.getSeconds()).padStart(2, "0");
+
+
+        /*
+         * Dateiendung
+         */
+
+        let extension = "webm";
+
+        if (
+            mimeType.includes("mp4")
+        ) {
+
+            extension = "mp4";
+
+        }
+
+
+        const fileName =
+            "Gaestebuch_" +
+            timestamp +
+            "." +
+            extension;
+
+
+        /*
+         * Upload an Google Apps Script
+         */
+
+        const response =
+            await fetch(
+                GOOGLE_SCRIPT_URL,
+                {
+
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "text/plain;charset=utf-8"
+                    },
+
+                    body: JSON.stringify({
+
+                        filename:
+                            fileName,
+
+                        mimeType:
+                            mimeType,
+
+                        data:
+                            base64Video
+
+                    })
+
+                }
+            );
+
+
+        const result =
+            await response.text();
+
+
+        console.log(
+            "Google Apps Script Antwort:",
+            result
+        );
+
+
+        /*
+         * Wenn die Anfrage erfolgreich
+         * an Google gesendet wurde,
+         * zeigen wir die Danke-Seite.
+         */
+
+        hideAllScreens();
+
+        document
+            .getElementById('thankYouScreen')
+            .classList.add('active');
+
+
+        /*
+         * Nach 4 Sekunden wieder
+         * zur Startseite
+         */
+
+        setTimeout(function() {
+
+            showStart();
+
+            button.disabled = false;
+
+            button.style.opacity = "1";
+
+            status.textContent = "";
+
+        }, 4000);
+
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Upload-Fehler:",
+            error
+        );
+
+
+        status.textContent =
+            "Die Nachricht konnte leider nicht gespeichert werden. Bitte versucht es noch einmal.";
+
+
+        button.disabled = false;
+
+        button.style.opacity = "1";
+
+    }
 
 }
 
@@ -1146,6 +1390,7 @@ function brideVideoFinished() {
 ===================================================== */
 
 let wakeLock = null;
+
 
 async function requestWakeLock() {
 
