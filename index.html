@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="de">
+
 <head>
 
 <meta charset="UTF-8">
@@ -13,7 +14,9 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Montserrat:wght@300;400;500&display=swap');
 
+
 :root {
+
     --ivory: #f8f4ef;
     --ivory-dark: #eee6de;
     --burgundy: #641f32;
@@ -23,46 +26,65 @@
     --plum: #422333;
     --gold: #b69a68;
     --white: #fffdf9;
+
 }
 
+
 * {
+
     box-sizing: border-box;
     -webkit-tap-highlight-color: transparent;
+
 }
+
 
 html,
 body {
+
     margin: 0;
     padding: 0;
     width: 100%;
     height: 100%;
     overflow: hidden;
     background: var(--ivory);
+
 }
+
 
 body {
+
     font-family: 'Montserrat', sans-serif;
     color: var(--plum);
+
 }
 
+
 .screen {
+
     position: absolute;
     inset: 0;
     display: none;
     width: 100%;
     height: 100%;
     overflow: hidden;
+
 }
+
 
 .screen.active {
+
     display: flex;
+
 }
 
+
 .center {
+
     flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
+
 }
 
 
@@ -71,6 +93,7 @@ body {
 ===================================================== */
 
 #startScreen {
+
     background:
         radial-gradient(
             circle at 50% 45%,
@@ -80,70 +103,98 @@ body {
         );
 
     padding: 7vh 7vw;
+
 }
 
+
 .ornament {
+
     color: var(--gold);
     font-size: 22px;
     letter-spacing: 8px;
     margin-bottom: 22px;
+
 }
 
+
 .names {
+
     font-family: 'Cormorant Garamond', serif;
     font-size: clamp(42px, 7vw, 78px);
     font-weight: 500;
     letter-spacing: 1px;
     color: var(--burgundy);
     line-height: 0.95;
+
 }
 
+
 .date {
+
     margin-top: 14px;
     font-size: 13px;
     letter-spacing: 4px;
     text-transform: uppercase;
     color: var(--mauve);
+
 }
 
+
 .gold-line {
+
     width: 80px;
     height: 1px;
     background: var(--gold);
     margin: 28px 0;
+
 }
 
+
 .title {
+
     font-family: 'Cormorant Garamond', serif;
     font-size: clamp(35px, 6vw, 64px);
     font-weight: 400;
     font-style: italic;
     color: var(--plum);
     line-height: 1;
+
 }
 
+
 .subtitle {
+
     margin-top: 10px;
     font-size: 11px;
     letter-spacing: 4px;
     text-transform: uppercase;
     color: var(--mauve);
+
 }
 
+
 .intro {
+
     margin-top: 28px;
     font-family: 'Cormorant Garamond', serif;
     font-size: 20px;
+    color: var(--plum);
+
 }
 
+
 .button-container {
+
     display: flex;
     gap: 20px;
     margin-top: 38px;
     width: min(800px, 90vw);
+
 }
 
+
 .main-button {
+
     flex: 1;
     min-height: 110px;
     padding: 20px;
@@ -157,18 +208,28 @@ body {
     letter-spacing: 2px;
     line-height: 1.6;
     cursor: pointer;
+    transition: all 0.25s ease;
+
 }
+
 
 .main-button:active {
+
     transform: scale(0.97);
+    background: var(--burgundy);
+    color: white;
+
 }
 
+
 .button-icon {
+
     display: block;
     font-family: 'Cormorant Garamond', serif;
     font-size: 35px;
     margin-bottom: 8px;
     color: var(--gold);
+
 }
 
 
@@ -177,32 +238,43 @@ body {
 ===================================================== */
 
 #messageScreen {
+
     background: var(--ivory);
     padding: 5vh 6vw;
+
 }
 
+
 .small-heading {
+
     font-size: 10px;
     text-transform: uppercase;
     letter-spacing: 4px;
     color: var(--mauve);
     margin-bottom: 12px;
+
 }
 
+
 .large-heading {
+
     font-family: 'Cormorant Garamond', serif;
     font-size: clamp(35px, 6vw, 58px);
     font-weight: 400;
     color: var(--burgundy);
     margin: 0;
+
 }
 
+
 .question {
+
     max-width: 650px;
     margin-top: 15px;
     font-family: 'Cormorant Garamond', serif;
     font-size: 21px;
     line-height: 1.4;
+
 }
 
 
@@ -211,110 +283,172 @@ body {
 ===================================================== */
 
 #cameraScreen {
+
     background: #160b10;
     color: white;
     flex-direction: column;
+
 }
+
 
 .camera-header {
+
     position: absolute;
-    top: 18px;
+    top: 20px;
     left: 0;
     right: 0;
-    z-index: 20;
+    z-index: 10;
     text-align: center;
+
 }
+
 
 .camera-title {
+
     font-family: 'Cormorant Garamond', serif;
     font-size: 25px;
+
 }
 
+
 .timer {
+
     margin-top: 5px;
     font-size: 13px;
     letter-spacing: 2px;
-    opacity: 0.85;
+    opacity: 0.8;
+
 }
 
+
 .camera-back {
+
     position: absolute;
     top: 20px;
     left: 20px;
     z-index: 30;
+
     border: none;
     background: rgba(0,0,0,0.35);
+
     color: white;
-    padding: 10px 14px;
+
     font-family: 'Montserrat', sans-serif;
     font-size: 10px;
     letter-spacing: 1.5px;
     text-transform: uppercase;
+
+    padding: 10px 14px;
+
     cursor: pointer;
-    border-radius: 2px;
+
 }
 
+
 #cameraPreview {
+
     width: 100%;
     height: 100%;
     object-fit: cover;
     background: #160b10;
+
 }
 
+
 .camera-controls {
+
     position: absolute;
     bottom: 35px;
     left: 0;
     right: 0;
+
     display: flex;
     justify-content: center;
+
     z-index: 20;
+
 }
+
 
 .record-button {
+
     width: 85px;
     height: 85px;
+
     border-radius: 50%;
+
     border: 6px solid rgba(255,255,255,0.8);
+
     background: #9b2744;
-    box-shadow: 0 0 0 2px rgba(182,154,104,0.8);
+
+    box-shadow:
+        0 0 0 2px rgba(182,154,104,0.8);
+
     cursor: pointer;
+
 }
+
 
 .record-button.recording {
+
     background: #481522;
+
 }
+
 
 .record-button-inner {
+
     width: 28px;
     height: 28px;
+
     background: white;
+
     border-radius: 50%;
+
     margin: auto;
+
 }
+
 
 .recording .record-button-inner {
+
     border-radius: 3px;
+
 }
+
 
 .camera-error {
+
     position: absolute;
     inset: 0;
+
     display: none;
+
     justify-content: center;
     align-items: center;
+
     text-align: center;
+
     padding: 30px;
+
     background: var(--plum);
+
     z-index: 50;
+
 }
+
 
 .camera-error.active {
+
     display: flex;
+
 }
 
+
 .error-content {
+
     max-width: 600px;
+
 }
 
 
@@ -323,92 +457,121 @@ body {
 ===================================================== */
 
 #reviewScreen {
+
     background: var(--ivory);
     padding: 5vh 5vw;
+
 }
 
-#recordedVideo {
-    max-width: 80vw;
-    max-height: 55vh;
-    margin-top: 25px;
-    background: black;
-    border-radius: 3px;
-    box-shadow: 0 10px 40px rgba(50,20,30,0.15);
-}
 
 .review-back {
+
     position: absolute;
-    top: 22px;
-    left: 25px;
-}
 
-.review-buttons {
-    display: flex;
-    gap: 15px;
-    margin-top: 25px;
-}
+    top: 25px;
+    left: 30px;
 
-.secondary-button,
-.primary-button {
-    min-width: 190px;
-    padding: 16px 24px;
-    border-radius: 2px;
+    border: none;
+    background: transparent;
+
+    color: var(--mauve);
+
     font-family: 'Montserrat', sans-serif;
     font-size: 11px;
     letter-spacing: 2px;
+
+    text-transform: uppercase;
+
     cursor: pointer;
+
 }
 
+
+#recordedVideo {
+
+    max-width: 80vw;
+    max-height: 55vh;
+
+    margin-top: 25px;
+
+    background: black;
+
+    border-radius: 3px;
+
+    box-shadow:
+        0 10px 40px rgba(50,20,30,0.15);
+
+}
+
+
+.review-buttons {
+
+    display: flex;
+    gap: 15px;
+    margin-top: 25px;
+
+}
+
+
+.secondary-button,
+.primary-button {
+
+    min-width: 190px;
+
+    padding: 16px 24px;
+
+    border-radius: 2px;
+
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px;
+    letter-spacing: 2px;
+
+    cursor: pointer;
+
+}
+
+
 .secondary-button {
+
     border: 1px solid var(--gold);
     background: transparent;
     color: var(--burgundy);
+
 }
 
+
 .primary-button {
+
     border: 1px solid var(--burgundy);
     background: var(--burgundy);
     color: white;
+
 }
+
 
 .primary-button:disabled {
+
     cursor: wait;
+
 }
+
 
 .upload-status {
+
     margin-top: 15px;
+
     font-size: 12px;
+
     color: var(--mauve);
+
     min-height: 40px;
+
     max-width: 700px;
+
     text-align: center;
+
     line-height: 1.5;
-}
 
-.backup-area {
-    display: none;
-    margin-top: 20px;
-    padding: 18px;
-    border: 1px solid rgba(182,154,104,0.7);
-    max-width: 600px;
-}
-
-.backup-area.active {
-    display: block;
-}
-
-.backup-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 23px;
-    color: var(--burgundy);
-    margin-bottom: 8px;
-}
-
-.backup-text {
-    font-size: 11px;
-    line-height: 1.5;
-    color: var(--plum);
-    margin-bottom: 15px;
 }
 
 
@@ -417,23 +580,38 @@ body {
 ===================================================== */
 
 #thankYouScreen {
+
     background: var(--ivory);
     padding: 10vw;
+
 }
+
 
 .thank-you {
+
     font-family: 'Cormorant Garamond', serif;
+
     font-size: clamp(42px, 7vw, 70px);
+
     color: var(--burgundy);
+
     font-style: italic;
+
 }
 
+
 .thank-text {
+
     margin-top: 20px;
+
     max-width: 550px;
+
     font-family: 'Cormorant Garamond', serif;
+
     font-size: 23px;
+
     line-height: 1.5;
+
 }
 
 
@@ -442,27 +620,47 @@ body {
 ===================================================== */
 
 #brideVideoScreen {
+
     background: var(--ivory);
+
     padding: 4vh 5vw;
+
 }
+
 
 #brideVideo {
+
     max-width: 85vw;
+
     max-height: 65vh;
+
     margin-top: 25px;
+
     background: black;
+
 }
 
+
 .back-button {
+
     margin-top: 20px;
+
     border: none;
+
     background: transparent;
+
     color: var(--mauve);
+
     font-family: 'Montserrat', sans-serif;
+
     font-size: 11px;
+
     letter-spacing: 2px;
+
     text-transform: uppercase;
+
     cursor: pointer;
+
 }
 
 
@@ -472,43 +670,55 @@ body {
 
 @media (orientation: portrait) {
 
-    .camera-back {
-        top: 12px;
-        left: 12px;
-        font-size: 9px;
-        padding: 8px 10px;
+    .button-container {
+
+        flex-direction: column;
+
+        width: min(500px, 85vw);
+
     }
 
-    .button-container {
-        flex-direction: column;
-        width: min(500px, 85vw);
-    }
 
     .main-button {
+
         min-height: 100px;
+
     }
+
 
     .intro {
+
         font-size: 18px;
+
     }
 
+
     .review-buttons {
+
         flex-direction: column;
+
     }
+
 
     .secondary-button,
     .primary-button {
+
         width: 80vw;
+
     }
 
+
     .review-back {
-        top: 12px;
-        left: 12px;
+
+        left: 15px;
+        top: 15px;
+
     }
 
 }
 
 </style>
+
 </head>
 
 
@@ -519,48 +729,63 @@ body {
      START
 ===================================================== -->
 
-<section id="startScreen" class="screen active center">
+<section id="startScreen"
+         class="screen active center">
 
-    <div class="ornament">✦</div>
+    <div class="ornament">
+        ✦
+    </div>
+
 
     <div class="names">
         Jennifer & Sebastian
     </div>
 
+
     <div class="date">
         10. Oktober 2026
     </div>
 
+
     <div class="gold-line"></div>
+
 
     <div class="title">
         Forever in October
     </div>
 
+
     <div class="subtitle">
         A Velvet Romance
     </div>
 
+
     <div class="intro">
         Unser digitales Gästebuch
     </div>
+
 
     <div class="button-container">
 
         <button class="main-button"
                 onclick="startCamera()">
 
-            <span class="button-icon">♡</span>
+            <span class="button-icon">
+                ♡
+            </span>
 
             HINTERLASST UNS<br>
             EINE VIDEOBOTSCHAFT
 
         </button>
 
+
         <button class="main-button"
                 onclick="showBrideVideo()">
 
-            <span class="button-icon">✦</span>
+            <span class="button-icon">
+                ✦
+            </span>
 
             EIN KLEINER GRUSS<br>
             VOM BRAUTPAAR
@@ -570,6 +795,7 @@ body {
     </div>
 
 </section>
+
 
 
 <!-- =====================================================
@@ -583,9 +809,11 @@ body {
         Forever in October
     </div>
 
+
     <h1 class="large-heading">
         Eine Erinnerung für immer
     </h1>
+
 
     <div class="question">
 
@@ -594,7 +822,9 @@ body {
 
     </div>
 
+
     <div class="gold-line"></div>
+
 
     <button class="primary-button"
             onclick="startCameraDirectly()">
@@ -603,14 +833,16 @@ body {
 
     </button>
 
+
     <button class="back-button"
             onclick="showStart()">
 
-        ← Zurück zum Gästebuch
+        Zurück zum Gästebuch
 
     </button>
 
 </section>
+
 
 
 <!-- =====================================================
@@ -620,6 +852,7 @@ body {
 <section id="cameraScreen"
          class="screen">
 
+
     <button class="camera-back"
             onclick="showStart()">
 
@@ -627,11 +860,13 @@ body {
 
     </button>
 
+
     <div class="camera-header">
 
         <div class="camera-title">
             Eure Videobotschaft
         </div>
+
 
         <div class="timer"
              id="timer">
@@ -671,14 +906,19 @@ body {
                 Oh …
             </div>
 
+
             <p id="cameraErrorText">
                 Die Kamera konnte leider nicht geöffnet werden.
             </p>
 
+
             <p>
+
                 Bitte überprüft, ob der Browser Zugriff
                 auf Kamera und Mikrofon hat.
+
             </p>
+
 
             <button class="primary-button"
                     onclick="showStart()">
@@ -694,6 +934,7 @@ body {
 </section>
 
 
+
 <!-- =====================================================
      REVIEW
 ===================================================== -->
@@ -701,20 +942,24 @@ body {
 <section id="reviewScreen"
          class="screen center">
 
-    <button class="back-button review-back"
+
+    <button class="review-back"
             onclick="showStart()">
 
         ← Zurück zum Gästebuch
 
     </button>
 
+
     <div class="small-heading">
         Eure Erinnerung
     </div>
 
+
     <h1 class="large-heading">
         Sieht gut aus?
     </h1>
+
 
     <video id="recordedVideo"
            controls
@@ -744,50 +989,11 @@ body {
 
     <div id="uploadStatus"
          class="upload-status">
-    </div>
-
-
-    <!--
-         Wird NUR nach fehlgeschlagenem
-         Google-Drive-Upload angezeigt.
-    -->
-
-    <div id="backupArea"
-         class="backup-area">
-
-        <div class="backup-title">
-            Video sicher speichern
-        </div>
-
-        <div class="backup-text">
-
-            Der Upload zu unserem Gästebuch
-            ist leider fehlgeschlagen.
-            Damit eure Nachricht nicht verloren geht,
-            könnt ihr das Video jetzt direkt auf
-            diesem Gerät speichern.
-
-        </div>
-
-        <button class="primary-button"
-                onclick="downloadBackup()">
-
-            ↓ VIDEO AUF DIESEM GERÄT SPEICHERN
-
-        </button>
-
-        <br>
-
-        <button class="back-button"
-                onclick="saveVideo()">
-
-            ↻ UPLOAD ERNEUT VERSUCHEN
-
-        </button>
 
     </div>
 
 </section>
+
 
 
 <!-- =====================================================
@@ -797,13 +1003,16 @@ body {
 <section id="thankYouScreen"
          class="screen center">
 
+
     <div class="ornament">
         ✦
     </div>
 
+
     <div class="thank-you">
         Danke für eure Nachricht
     </div>
+
 
     <div class="thank-text">
 
@@ -812,13 +1021,16 @@ body {
 
     </div>
 
+
     <div class="gold-line"></div>
+
 
     <div>
         Jennifer & Sebastian
     </div>
 
 </section>
+
 
 
 <!-- =====================================================
@@ -828,15 +1040,18 @@ body {
 <section id="brideVideoScreen"
          class="screen center">
 
+
     <div class="small-heading">
         Eine Nachricht vom Brautpaar
     </div>
+
 
     <h1 class="large-heading">
 
         Das Brautpaar hat euch etwas zu sagen …
 
     </h1>
+
 
     <video id="brideVideo"
            controls
@@ -849,6 +1064,7 @@ body {
         Euer Browser unterstützt dieses Video leider nicht.
 
     </video>
+
 
     <button class="back-button"
             onclick="showStart()">
@@ -863,60 +1079,54 @@ body {
 
 <script>
 
+
 /* =====================================================
    VARIABLEN
 ===================================================== */
 
 let cameraStream = null;
+
 let mediaRecorder = null;
 
 let recordedChunks = [];
+
 let recordedVideoURL = null;
 
 let recording = false;
 
 let timerInterval = null;
+
 let recordingSeconds = 0;
 
 
 /* =====================================================
-   AUFNAHME-EINSTELLUNGEN
+   AUFNAHME
 ===================================================== */
 
 const MAX_RECORDING_TIME = 120;
 
 
 /*
- * Sicherheitsgrenze für das fertige Video.
- *
- * Wir verwenden absichtlich 33 MB statt 34/35 MB,
- * damit Base64 + JSON sicher unter der Upload-Grenze
- * bleiben.
+ * 720p / gute Qualität
  */
 
-const MAX_VIDEO_SIZE_MB = 33;
+const VIDEO_BITRATE = 2500000;
 
-
-/*
- * Ziel-Bitrate.
- *
- * Wichtig:
- * Einige Browser können diese Einstellung
- * nicht exakt einhalten.
- *
- * Deshalb wird die tatsächliche Dateigröße
- * während der Aufnahme zusätzlich überwacht.
- */
-
-const VIDEO_BITRATE = 2100000;
 const AUDIO_BITRATE = 96000;
 
 
 /*
- * Maximale geschätzte Größe des Requests.
+ * Maximale Videogröße
  */
 
-const MAX_REQUEST_SIZE_MB = 45;
+const MAX_VIDEO_SIZE_MB = 34;
+
+
+/*
+ * Maximale Request-Größe
+ */
+
+const MAX_REQUEST_SIZE_MB = 46;
 
 
 /* =====================================================
@@ -935,24 +1145,29 @@ function hideAllScreens() {
 
     document
         .querySelectorAll('.screen')
-        .forEach(function(screen) {
-
-            screen.classList.remove('active');
-
-        });
+        .forEach(
+            screen => {
+                screen.classList.remove('active');
+            }
+        );
 
 }
 
 
 function showStart() {
 
+    if (recording) {
+
+        stopRecording();
+
+    }
+
+
     stopCamera();
 
-    stopTimer();
-
-    recording = false;
 
     hideAllScreens();
+
 
     document
         .getElementById('startScreen')
@@ -961,9 +1176,14 @@ function showStart() {
 }
 
 
+/* =====================================================
+   CAMERA INTRO
+===================================================== */
+
 function startCamera() {
 
     hideAllScreens();
+
 
     document
         .getElementById('messageScreen')
@@ -976,9 +1196,11 @@ function startCameraDirectly() {
 
     hideAllScreens();
 
+
     document
         .getElementById('cameraScreen')
         .classList.add('active');
+
 
     openCamera();
 
@@ -986,23 +1208,35 @@ function startCameraDirectly() {
 
 
 /* =====================================================
-   KAMERA
+   KAMERA ÖFFNEN
 ===================================================== */
 
 async function openCamera() {
 
     const video =
-        document.getElementById('cameraPreview');
+        document.getElementById(
+            'cameraPreview'
+        );
+
 
     const error =
-        document.getElementById('cameraError');
+        document.getElementById(
+            'cameraError'
+        );
+
 
     const errorText =
-        document.getElementById('cameraErrorText');
+        document.getElementById(
+            'cameraErrorText'
+        );
+
 
     try {
 
-        error.classList.remove('active');
+        error.classList.remove(
+            'active'
+        );
+
 
         if (
             !navigator.mediaDevices ||
@@ -1024,26 +1258,38 @@ async function openCamera() {
                     facingMode: "user",
 
                     width: {
+
                         ideal: 1280,
+
                         max: 1280
+
                     },
 
                     height: {
+
                         ideal: 720,
+
                         max: 720
+
                     },
 
                     frameRate: {
+
                         ideal: 30,
+
                         max: 30
+
                     }
 
                 },
 
+
                 audio: {
 
                     echoCancellation: true,
+
                     noiseSuppression: true,
+
                     autoGainControl: true
 
                 }
@@ -1061,6 +1307,11 @@ async function openCamera() {
         const videoTrack =
             cameraStream.getVideoTracks()[0];
 
+
+        const audioTrack =
+            cameraStream.getAudioTracks()[0];
+
+
         if (videoTrack) {
 
             console.log(
@@ -1071,9 +1322,6 @@ async function openCamera() {
         }
 
 
-        const audioTrack =
-            cameraStream.getAudioTracks()[0];
-
         if (audioTrack) {
 
             console.log(
@@ -1082,6 +1330,7 @@ async function openCamera() {
             );
 
         }
+
 
     }
 
@@ -1092,12 +1341,16 @@ async function openCamera() {
             err
         );
 
+
         errorText.textContent =
             "Die Kamera konnte nicht geöffnet werden. " +
             "Fehler: " +
             getReadableError(err);
 
-        error.classList.add('active');
+
+        error.classList.add(
+            'active'
+        );
 
     }
 
@@ -1111,42 +1364,67 @@ async function openCamera() {
 function getReadableError(error) {
 
     if (!error) {
+
         return "Unbekannter Fehler.";
+
     }
 
-    if (error.name === "NotAllowedError") {
+
+    if (
+        error.name ===
+        "NotAllowedError"
+    ) {
 
         return "Der Zugriff auf Kamera oder Mikrofon wurde verweigert.";
 
     }
 
-    if (error.name === "NotFoundError") {
+
+    if (
+        error.name ===
+        "NotFoundError"
+    ) {
 
         return "Es wurde keine Kamera oder kein Mikrofon gefunden.";
 
     }
 
-    if (error.name === "NotReadableError") {
+
+    if (
+        error.name ===
+        "NotReadableError"
+    ) {
 
         return "Kamera oder Mikrofon wird möglicherweise bereits von einer anderen App verwendet.";
 
     }
 
-    if (error.name === "SecurityError") {
+
+    if (
+        error.name ===
+        "SecurityError"
+    ) {
 
         return "Der Browser blockiert den Kamerazugriff aus Sicherheitsgründen.";
 
     }
 
-    if (error.name === "OverconstrainedError") {
+
+    if (
+        error.name ===
+        "OverconstrainedError"
+    ) {
 
         return "Die gewünschte Kameraauflösung wird von diesem Gerät nicht unterstützt.";
 
     }
 
-    return error.message ||
-           error.name ||
-           "Unbekannter Fehler.";
+
+    return (
+        error.message ||
+        error.name ||
+        "Unbekannter Fehler."
+    );
 
 }
 
@@ -1172,12 +1450,17 @@ function toggleRecording() {
 }
 
 
+/* =====================================================
+   AUFNAHME STARTEN
+===================================================== */
+
 function startRecording() {
 
     if (!cameraStream) {
 
         alert(
-            "Die Kamera ist noch nicht bereit. Bitte wartet kurz und versucht es erneut."
+            "Die Kamera ist noch nicht bereit. " +
+            "Bitte wartet kurz und versucht es erneut."
         );
 
         return;
@@ -1186,7 +1469,8 @@ function startRecording() {
 
 
     if (
-        typeof MediaRecorder === "undefined"
+        typeof MediaRecorder ===
+        "undefined"
     ) {
 
         alert(
@@ -1199,17 +1483,8 @@ function startRecording() {
 
 
     recordedChunks = [];
+
     recordingSeconds = 0;
-
-
-    const backupArea =
-        document.getElementById(
-            'backupArea'
-        );
-
-    backupArea.classList.remove(
-        'active'
-    );
 
 
     const button =
@@ -1224,7 +1499,9 @@ function startRecording() {
     const possibleTypes = [
 
         "video/webm;codecs=vp8,opus",
+
         "video/webm;codecs=vp8",
+
         "video/webm"
 
     ];
@@ -1288,23 +1565,29 @@ function startRecording() {
             error
         );
 
+
         try {
 
             mediaRecorder =
                 new MediaRecorder(
-                    cameraStream
-                );
+                    cameraStream,
+                    {
 
-            console.warn(
-                "Fallback-MediaRecorder verwendet."
-            );
+                        videoBitsPerSecond:
+                            VIDEO_BITRATE,
+
+                        audioBitsPerSecond:
+                            AUDIO_BITRATE
+
+                    }
+                );
 
         }
 
         catch (secondError) {
 
             alert(
-                "Die Videoaufnahme konnte auf diesem Gerät nicht gestartet werden.\n\n" +
+                "Die Videoaufnahme konnte nicht gestartet werden.\n\n" +
                 getReadableError(secondError)
             );
 
@@ -1326,62 +1609,6 @@ function startRecording() {
                 recordedChunks.push(
                     event.data
                 );
-
-
-                /*
-                 * WICHTIG:
-                 *
-                 * Wir überwachen die tatsächliche
-                 * Größe der aufgenommenen Chunks.
-                 *
-                 * Dadurch kann ein Browser mit höherer
-                 * tatsächlicher Bitrate die Datei nicht
-                 * unkontrolliert über die Grenze wachsen lassen.
-                 */
-
-                const currentSize =
-                    recordedChunks.reduce(
-                        function(total, chunk) {
-
-                            return total + chunk.size;
-
-                        },
-                        0
-                    );
-
-
-                const currentSizeMB =
-                    currentSize /
-                    1024 /
-                    1024;
-
-
-                console.log(
-                    "Aktuelle Aufnahmedatei:",
-                    currentSizeMB.toFixed(2),
-                    "MB"
-                );
-
-
-                if (
-                    currentSizeMB >=
-                    MAX_VIDEO_SIZE_MB
-                ) {
-
-                    if (recording) {
-
-                        console.log(
-                            "Maximale Dateigröße erreicht – Aufnahme wird beendet."
-                        );
-
-
-                        stopRecording(
-                            "size"
-                        );
-
-                    }
-
-                }
 
             }
 
@@ -1451,11 +1678,16 @@ function startRecording() {
 }
 
 
-function stopRecording(reason) {
+/* =====================================================
+   AUFNAHME STOPPEN
+===================================================== */
+
+function stopRecording() {
 
     if (
         !mediaRecorder ||
-        mediaRecorder.state === 'inactive'
+        mediaRecorder.state ===
+        'inactive'
     ) {
 
         return;
@@ -1465,34 +1697,20 @@ function stopRecording(reason) {
 
     mediaRecorder.stop();
 
-    recording = false;
 
-    stopTimer();
+    recording = false;
 
 
     document
-        .getElementById('recordButton')
+        .getElementById(
+            'recordButton'
+        )
         .classList.remove(
             'recording'
         );
 
 
-    if (reason === "size") {
-
-        setTimeout(
-            function() {
-
-                alert(
-                    "Die maximale Dateigröße wurde erreicht.\n\n" +
-                    "Die Aufnahme wurde automatisch beendet. " +
-                    "Ihr könnt das Video jetzt ganz normal überprüfen und abschicken."
-                );
-
-            },
-            200
-        );
-
-    }
+    stopTimer();
 
 }
 
@@ -1512,6 +1730,7 @@ function startTimer() {
 
                 recordingSeconds++;
 
+
                 updateTimer();
 
 
@@ -1520,9 +1739,7 @@ function startTimer() {
                     MAX_RECORDING_TIME
                 ) {
 
-                    stopRecording(
-                        "time"
-                    );
+                    stopRecording();
 
                 }
 
@@ -1535,15 +1752,12 @@ function startTimer() {
 
 function stopTimer() {
 
-    if (timerInterval) {
+    clearInterval(
+        timerInterval
+    );
 
-        clearInterval(
-            timerInterval
-        );
 
-        timerInterval = null;
-
-    }
+    timerInterval = null;
 
 }
 
@@ -1567,7 +1781,9 @@ function updateTimer() {
 
 
     document
-        .getElementById('timer')
+        .getElementById(
+            'timer'
+        )
         .textContent =
         `${minutes}:${seconds} / 02:00`;
 
@@ -1637,15 +1853,25 @@ function createRecordedVideo() {
     );
 
 
-    /*
-     * Wenn die tatsächliche fertige Datei
-     * geringfügig über die Grenze liegt,
-     * wird sie nicht verworfen.
-     *
-     * Wir zeigen sie trotzdem an.
-     *
-     * Der Upload prüft anschließend nochmals.
-     */
+    if (
+        sizeMB >
+        MAX_VIDEO_SIZE_MB
+    ) {
+
+        alert(
+            "Die Aufnahme ist " +
+            sizeMB.toFixed(1) +
+            " MB groß.\n\n" +
+            "Das erlaubte Maximum beträgt " +
+            MAX_VIDEO_SIZE_MB +
+            " MB.\n\n" +
+            "Bitte nehmt eine kürzere Nachricht auf."
+        );
+
+        return;
+
+    }
+
 
     if (recordedVideoURL) {
 
@@ -1679,23 +1905,18 @@ function createRecordedVideo() {
 
 
     document
-        .getElementById('reviewScreen')
-        .classList.add('active');
-
-
-    document
-        .getElementById('uploadStatus')
-        .textContent =
-        "Videogröße: " +
-        sizeMB.toFixed(1) +
-        " MB";
-
+        .getElementById(
+            'reviewScreen'
+        )
+        .classList.add(
+            'active'
+        );
 
 }
 
 
 /* =====================================================
-   NEU AUFNEHMEN
+   ERNEUT AUFNEHMEN
 ===================================================== */
 
 function recordAgain() {
@@ -1715,15 +1936,10 @@ function recordAgain() {
 
 
     document
-        .getElementById('uploadStatus')
+        .getElementById(
+            'uploadStatus'
+        )
         .textContent = "";
-
-
-    document
-        .getElementById('backupArea')
-        .classList.remove(
-            'active'
-        );
 
 
     startCameraDirectly();
@@ -1732,124 +1948,121 @@ function recordAgain() {
 
 
 /* =====================================================
-   BLOB → BASE64
+   ROBUSTE BASE64 KONVERTIERUNG
 ===================================================== */
 
-function blobToBase64(blob) {
+async function blobToBase64(blob) {
 
-    return new Promise(
-        function(resolve, reject) {
-
-            const reader =
-                new FileReader();
+    console.log(
+        "Base64-Konvertierung gestartet."
+    );
 
 
-            reader.onload =
-                function() {
-
-                    try {
-
-                        const result =
-                            reader.result;
+    const arrayBuffer =
+        await blob.arrayBuffer();
 
 
-                        if (
-                            typeof result !==
-                            "string"
-                        ) {
-
-                            reject(
-                                new Error(
-                                    "Video konnte nicht verarbeitet werden."
-                                )
-                            );
-
-                            return;
-
-                        }
+    const bytes =
+        new Uint8Array(
+            arrayBuffer
+        );
 
 
-                        const commaIndex =
-                            result.indexOf(',');
+    console.log(
+        "Bytes vor Base64:",
+        bytes.length
+    );
 
 
-                        if (
-                            commaIndex === -1
-                        ) {
+    /*
+     * Binärdaten in kleinere Stücke teilen,
+     * damit String.fromCharCode nicht
+     * an ein Argument-Limit stößt.
+     */
 
-                            reject(
-                                new Error(
-                                    "Die Videodaten konnten nicht korrekt in Base64 umgewandelt werden."
-                                )
-                            );
-
-                            return;
-
-                        }
+    const chunkSize = 0x8000;
 
 
-                        const base64 =
-                            result.substring(
-                                commaIndex + 1
-                            );
+    let binary = "";
 
 
-                        if (
-                            !base64 ||
-                            base64.length < 100
-                        ) {
+    for (
+        let i = 0;
+        i < bytes.length;
+        i += chunkSize
+    ) {
 
-                            reject(
-                                new Error(
-                                    "Die Videodaten sind offensichtlich zu kurz. " +
-                                    "Die Base64-Umwandlung ist fehlgeschlagen."
-                                )
-                            );
-
-                            return;
-
-                        }
-
-
-                        resolve(
-                            base64
-                        );
-
-                    }
-
-                    catch (error) {
-
-                        reject(error);
-
-                    }
-
-                };
-
-
-            reader.onerror =
-                function() {
-
-                    reject(
-                        new Error(
-                            "Das Video konnte nicht in das Upload-Format umgewandelt werden."
-                        )
-                    );
-
-                };
-
-
-            reader.readAsDataURL(
-                blob
+        const chunk =
+            bytes.subarray(
+                i,
+                Math.min(
+                    i + chunkSize,
+                    bytes.length
+                )
             );
 
-        }
+
+        binary +=
+            String.fromCharCode(
+                ...chunk
+            );
+
+    }
+
+
+    const base64 =
+        btoa(binary);
+
+
+    console.log(
+        "Base64 Länge:",
+        base64.length
     );
+
+
+    /*
+     * Plausibilitätsprüfung
+     */
+
+    if (
+        !base64 ||
+        base64.length < 100
+    ) {
+
+        throw new Error(
+            "Die Videodaten konnten im Browser nicht korrekt in Base64 umgewandelt werden. " +
+            "Die erzeugten Daten sind unerwartet kurz."
+        );
+
+    }
+
+
+    /*
+     * Base64-Zeichen prüfen
+     */
+
+    const validBase64 =
+        /^[A-Za-z0-9+/]*={0,2}$/.test(
+            base64
+        );
+
+
+    if (!validBase64) {
+
+        throw new Error(
+            "Die erzeugten Base64-Daten sind ungültig."
+        );
+
+    }
+
+
+    return base64;
 
 }
 
 
 /* =====================================================
-   UPLOAD
+   VIDEO SPEICHERN
 ===================================================== */
 
 async function saveVideo() {
@@ -1879,21 +2092,10 @@ async function saveVideo() {
         );
 
 
-    const backupArea =
-        document.getElementById(
-            'backupArea'
-        );
-
-
     button.disabled = true;
 
     button.style.opacity =
         "0.6";
-
-
-    backupArea.classList.remove(
-        'active'
-    );
 
 
     status.textContent =
@@ -1901,6 +2103,10 @@ async function saveVideo() {
 
 
     try {
+
+        /*
+         * VIDEO-BLOB
+         */
 
         const mimeType =
             mediaRecorder.mimeType ||
@@ -1930,26 +2136,30 @@ async function saveVideo() {
 
 
         /*
-         * Harte Sicherheitsgrenze.
-         *
-         * Normalerweise wird diese gar nicht erreicht,
-         * weil die Aufnahme vorher automatisch stoppt.
+         * GRÖSSENPRÜFUNG
          */
 
         if (
-            sizeMB > MAX_VIDEO_SIZE_MB + 0.5
+            sizeMB >
+            MAX_VIDEO_SIZE_MB
         ) {
 
             throw new Error(
                 "Die Videodatei ist " +
                 sizeMB.toFixed(1) +
                 " MB groß. " +
-                "Sie ist damit zu groß für den sicheren Upload. " +
-                "Bitte nehmt eine etwas kürzere Nachricht auf."
+                "Das erlaubte Maximum beträgt " +
+                MAX_VIDEO_SIZE_MB +
+                " MB. " +
+                "Bitte nehmt eine kürzere Nachricht auf."
             );
 
         }
 
+
+        /*
+         * BASE64
+         */
 
         status.textContent =
             "Video wird für den Upload vorbereitet …";
@@ -1962,31 +2172,61 @@ async function saveVideo() {
 
 
         console.log(
-            "Base64-Länge:",
-            base64Video.length
+            "Base64 tatsächlich erzeugt:",
+            base64Video.length,
+            "Zeichen"
         );
 
 
         /*
-         * JSON-Größe prüfen.
+         * Base64 sollte ca. 4/3
+         * der Originalgröße haben.
          */
 
+        const expectedMinimum =
+            blob.size * 1.2;
+
+
+        if (
+            base64Video.length <
+            expectedMinimum
+        ) {
+
+            throw new Error(
+                "Die Base64-Konvertierung ist fehlgeschlagen. " +
+                "Das erzeugte Base64 ist ungewöhnlich kurz."
+            );
+
+        }
+
+
+        /*
+         * REQUEST-GRÖSSE
+         */
+
+        const requestData = {
+
+            fileName:
+                "Gaestebuch_" +
+                createTimestamp() +
+                ".webm",
+
+            mimeType:
+                mimeType,
+
+            file:
+                base64Video
+
+        };
+
+
         const requestBody =
-            JSON.stringify({
-
-                fileName:
-                    "video.webm",
-
-                mimeType:
-                    mimeType,
-
-                file:
-                    base64Video
-
-            });
+            JSON.stringify(
+                requestData
+            );
 
 
-        const estimatedRequestSizeMB =
+        const requestSizeMB =
             new Blob(
                 [requestBody]
             ).size /
@@ -1996,19 +2236,23 @@ async function saveVideo() {
 
         console.log(
             "Geschätzte Request-Größe:",
-            estimatedRequestSizeMB.toFixed(2),
+            requestSizeMB.toFixed(2),
             "MB"
         );
 
 
+        /*
+         * REQUEST-GRÖSSE PRÜFEN
+         */
+
         if (
-            estimatedRequestSizeMB >
+            requestSizeMB >
             MAX_REQUEST_SIZE_MB
         ) {
 
             throw new Error(
                 "Der Upload wäre " +
-                estimatedRequestSizeMB.toFixed(1) +
+                requestSizeMB.toFixed(1) +
                 " MB groß und damit zu groß. " +
                 "Bitte nehmt eine kürzere Nachricht auf."
             );
@@ -2017,134 +2261,38 @@ async function saveVideo() {
 
 
         /*
-         * DATEINAME
-         */
-
-        const now =
-            new Date();
-
-
-        const timestamp =
-            now.getFullYear() +
-            "-" +
-            String(
-                now.getMonth() + 1
-            ).padStart(2, "0") +
-            "-" +
-            String(
-                now.getDate()
-            ).padStart(2, "0") +
-            "_" +
-            String(
-                now.getHours()
-            ).padStart(2, "0") +
-            "-" +
-            String(
-                now.getMinutes()
-            ).padStart(2, "0") +
-            "-" +
-            String(
-                now.getSeconds()
-            ).padStart(2, "0");
-
-
-        const extension =
-            mimeType.includes("mp4")
-                ? "mp4"
-                : "webm";
-
-
-        const fileName =
-            "Gaestebuch_" +
-            timestamp +
-            "." +
-            extension;
-
-
-        /*
-         * UPLOAD
+         * GOOGLE UPLOAD
          */
 
         status.textContent =
-            "Nachricht wird gespeichert …";
+            "Nachricht wird zu Google Drive übertragen …";
 
 
         console.log(
             "Upload gestartet:",
-            fileName
+            requestData.fileName
         );
 
 
-        const controller =
-            new AbortController();
+        const response =
+            await fetch(
+                GOOGLE_SCRIPT_URL,
+                {
 
+                    method: "POST",
 
-        /*
-         * Sehr großzügiger Timeout.
-         *
-         * Bei langsamer Hochzeits-WLAN-Verbindung
-         * soll der Upload nicht zu schnell abbrechen.
-         */
+                    headers: {
 
-        const timeout =
-            setTimeout(
-                function() {
+                        "Content-Type":
+                            "text/plain;charset=utf-8"
 
-                    controller.abort();
+                    },
 
-                },
-                180000
+                    body:
+                        requestBody
+
+                }
             );
-
-
-        let response;
-
-
-        try {
-
-            response =
-                await fetch(
-                    GOOGLE_SCRIPT_URL,
-                    {
-
-                        method: "POST",
-
-                        headers: {
-
-                            "Content-Type":
-                                "text/plain;charset=utf-8"
-
-                        },
-
-                        body:
-                            JSON.stringify({
-
-                                fileName:
-                                    fileName,
-
-                                mimeType:
-                                    mimeType,
-
-                                file:
-                                    base64Video
-
-                            }),
-
-                        signal:
-                            controller.signal
-
-                    }
-                );
-
-        }
-
-        finally {
-
-            clearTimeout(
-                timeout
-            );
-
-        }
 
 
         console.log(
@@ -2163,18 +2311,9 @@ async function saveVideo() {
         );
 
 
-        if (
-            !response.ok
-        ) {
-
-            throw new Error(
-                "Google Apps Script antwortete mit HTTP " +
-                response.status +
-                "."
-            );
-
-        }
-
+        /*
+         * GOOGLE ANTWORT
+         */
 
         let result;
 
@@ -2192,6 +2331,10 @@ async function saveVideo() {
 
             throw new Error(
                 "Google Apps Script hat keine gültige JSON-Antwort geliefert.\n\n" +
+                "HTTP Status: " +
+                response.status +
+                "\n\n" +
+                "Antwort:\n" +
                 responseText.substring(
                     0,
                     500
@@ -2200,6 +2343,10 @@ async function saveVideo() {
 
         }
 
+
+        /*
+         * ERFOLG PRÜFEN
+         */
 
         if (
             !result.success
@@ -2222,13 +2369,20 @@ async function saveVideo() {
         );
 
 
+        console.log(
+            "Dateiname:",
+            result.fileName
+        );
+
+
+        console.log(
+            "Google Drive File ID:",
+            result.fileId
+        );
+
+
         status.textContent =
             "Gespeichert ✓";
-
-
-        backupArea.classList.remove(
-            'active'
-        );
 
 
         hideAllScreens();
@@ -2261,6 +2415,7 @@ async function saveVideo() {
             4000
         );
 
+
     }
 
     catch (error) {
@@ -2271,47 +2426,84 @@ async function saveVideo() {
         );
 
 
-        let errorMessage =
-            error.message ||
-            "Unbekannter Upload-Fehler.";
-
-
-        if (
-            error.name ===
-            "AbortError"
-        ) {
-
-            errorMessage =
-                "Der Upload hat zu lange gedauert und wurde abgebrochen. " +
-                "Das Video ist aber weiterhin auf diesem Gerät verfügbar.";
-
-        }
-
-
-        /*
-         * WICHTIG:
-         *
-         * Erst jetzt wird der Backup-Bereich
-         * sichtbar.
-         */
-
         showUploadError(
-            errorMessage
-        );
-
-
-        backupArea.classList.add(
-            'active'
+            error.message ||
+            "Unbekannter Upload-Fehler."
         );
 
 
         button.disabled =
             false;
 
+
         button.style.opacity =
             "1";
 
     }
+
+}
+
+
+/* =====================================================
+   TIMESTAMP
+===================================================== */
+
+function createTimestamp() {
+
+    const now =
+        new Date();
+
+
+    return (
+
+        now.getFullYear() +
+
+        "-" +
+
+        String(
+            now.getMonth() + 1
+        ).padStart(
+            2,
+            "0"
+        ) +
+
+        "-" +
+
+        String(
+            now.getDate()
+        ).padStart(
+            2,
+            "0"
+        ) +
+
+        "_" +
+
+        String(
+            now.getHours()
+        ).padStart(
+            2,
+            "0"
+        ) +
+
+        "-" +
+
+        String(
+            now.getMinutes()
+        ).padStart(
+            2,
+            "0"
+        ) +
+
+        "-" +
+
+        String(
+            now.getSeconds()
+        ).padStart(
+            2,
+            "0"
+        )
+
+    );
 
 }
 
@@ -2329,395 +2521,62 @@ function showUploadError(message) {
 
 
     status.innerHTML =
+
         "Die Nachricht konnte leider nicht gespeichert werden." +
+
         "<br><br>" +
+
         "<strong>Fehler:</strong><br>" +
-        escapeHtml(message) +
+
+        escapeHtml(
+            message
+        ) +
+
         "<br><br>" +
-        "Bitte speichert euer Video sicherheitshalber auf diesem Gerät.";
+
+        "Bitte versucht es erneut.";
 
 }
 
 
 /* =====================================================
-   BACKUP DOWNLOAD – PC / ANDROID / IPHONE / IPAD
-===================================================== */
-
-async function downloadBackup() {
-
-    if (
-        !recordedChunks ||
-        !recordedChunks.length
-    ) {
-
-        alert(
-            "Das Video ist leider nicht mehr verfügbar."
-        );
-
-        return;
-
-    }
-
-
-    try {
-
-        /*
-         * MIME-Typ ermitteln
-         */
-
-        const mimeType =
-            mediaRecorder &&
-            mediaRecorder.mimeType
-                ? mediaRecorder.mimeType
-                : "video/webm";
-
-
-        /*
-         * Video aus den aufgenommenen Chunks
-         * wieder zusammensetzen
-         */
-
-        const blob =
-            new Blob(
-                recordedChunks,
-                {
-                    type: mimeType
-                }
-            );
-
-
-        if (
-            !blob ||
-            blob.size === 0
-        ) {
-
-            throw new Error(
-                "Die Videodatei ist leer."
-            );
-
-        }
-
-
-        /*
-         * Dateiname
-         */
-
-        const now =
-            new Date();
-
-
-        const timestamp =
-            now.getFullYear() +
-            "-" +
-            String(
-                now.getMonth() + 1
-            ).padStart(2, "0") +
-            "-" +
-            String(
-                now.getDate()
-            ).padStart(2, "0") +
-            "_" +
-            String(
-                now.getHours()
-            ).padStart(2, "0") +
-            "-" +
-            String(
-                now.getMinutes()
-            ).padStart(2, "0") +
-            "-" +
-            String(
-                now.getSeconds()
-            ).padStart(2, "0");
-
-
-        const extension =
-            mimeType.includes("mp4")
-                ? "mp4"
-                : "webm";
-
-
-        const fileName =
-            "Jennifer-Sebastian-Gaestebuch-" +
-            timestamp +
-            "." +
-            extension;
-
-
-        console.log(
-            "Backup-Datei:",
-            fileName
-        );
-
-        console.log(
-            "Backup-Größe:",
-            (blob.size / 1024 / 1024).toFixed(2),
-            "MB"
-        );
-
-
-        /*
-         * =================================================
-         * IPHONE / IPAD
-         * =================================================
-         *
-         * Wenn navigator.share + File unterstützt werden,
-         * verwenden wir die native iOS-Teilen-Funktion.
-         *
-         * Dort kann der Gast z.B.
-         * "In Dateien sichern" auswählen.
-         */
-
-        if (
-            navigator.share &&
-            typeof File !== "undefined"
-        ) {
-
-            try {
-
-                const file =
-                    new File(
-                        [blob],
-                        fileName,
-                        {
-                            type: mimeType
-                        }
-                    );
-
-
-                /*
-                 * Prüfen, ob der Browser diesen
-                 * Dateityp tatsächlich teilen kann.
-                 */
-
-                if (
-                    !navigator.canShare ||
-                    navigator.canShare({
-                        files: [file]
-                    })
-                ) {
-
-                    await navigator.share({
-
-                        files: [file],
-
-                        title:
-                            "Videobotschaft für Jennifer & Sebastian",
-
-                        text:
-                            "Meine Videobotschaft für Jennifer & Sebastian"
-
-                    });
-
-
-                    document
-                        .getElementById(
-                            'uploadStatus'
-                        )
-                        .textContent =
-                        "Das Video wurde zum Speichern bzw. Teilen bereitgestellt ✓";
-
-
-                    return;
-
-                }
-
-            }
-
-            catch (shareError) {
-
-                /*
-                 * Wenn der Benutzer das Teilen-Fenster
-                 * einfach schließt, soll KEIN Fehler
-                 * angezeigt werden.
-                 */
-
-                if (
-                    shareError &&
-                    shareError.name ===
-                    "AbortError"
-                ) {
-
-                    console.log(
-                        "Teilen vom Benutzer abgebrochen."
-                    );
-
-                    return;
-
-                }
-
-
-                console.warn(
-                    "Native Dateifreigabe nicht möglich:",
-                    shareError
-                );
-
-            }
-
-        }
-
-
-        /*
-         * =================================================
-         * FALLBACK FÜR PC / ANDROID / ÄLTERE BROWSER
-         * =================================================
-         */
-
-        const url =
-            URL.createObjectURL(
-                blob
-            );
-
-
-        const link =
-            document.createElement(
-                "a"
-            );
-
-
-        link.href =
-            url;
-
-
-        link.download =
-            fileName;
-
-
-        link.style.display =
-            "none";
-
-
-        document.body.appendChild(
-            link
-        );
-
-
-        link.click();
-
-
-        document.body.removeChild(
-            link
-        );
-
-
-        /*
-         * Object URL erst später freigeben,
-         * damit der Browser genug Zeit hat,
-         * den Download zu starten.
-         */
-
-        setTimeout(
-            function() {
-
-                URL.revokeObjectURL(
-                    url
-                );
-
-            },
-            10000
-        );
-
-
-        document
-            .getElementById(
-                'uploadStatus'
-            )
-            .textContent =
-            "Das Video wurde zum Speichern auf diesem Gerät bereitgestellt ✓";
-
-
-    }
-
-    catch (error) {
-
-        console.error(
-            "Backup-Speicherfehler:",
-            error
-        );
-
-
-        /*
-         * Letzter Fallback:
-         * Video direkt in einem neuen Fenster öffnen.
-         *
-         * Besonders auf iOS kann der Benutzer
-         * anschließend über Teilen → In Dateien sichern
-         * speichern.
-         */
-
-        try {
-
-            const fallbackBlob =
-                new Blob(
-                    recordedChunks,
-                    {
-                        type:
-                            (
-                                mediaRecorder &&
-                                mediaRecorder.mimeType
-                            ) ||
-                            "video/webm"
-                    }
-                );
-
-
-            const fallbackURL =
-                URL.createObjectURL(
-                    fallbackBlob
-                );
-
-
-            window.open(
-                fallbackURL,
-                "_blank"
-            );
-
-
-            document
-                .getElementById(
-                    'uploadStatus'
-                )
-                .textContent =
-                "Das Video wurde geöffnet. Über „Teilen“ könnt ihr es auf dem Gerät speichern.";
-
-
-        }
-
-        catch (fallbackError) {
-
-            console.error(
-                "Auch Backup-Fallback fehlgeschlagen:",
-                fallbackError
-            );
-
-
-            alert(
-                "Das Video konnte leider nicht automatisch gespeichert werden. " +
-                "Bitte versucht es erneut."
-            );
-
-        }
-
-    }
-
-}
-/* =====================================================
-   HTML ESCAPEN
+   HTML ESCAPE
 ===================================================== */
 
 function escapeHtml(text) {
 
     return String(text)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
+
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+
+        .replace(
+            /</g,
+            "&lt;"
+        )
+
+        .replace(
+            />/g,
+            "&gt;"
+        )
+
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+
+        .replace(
+            /'/g,
+            "&#039;"
+        );
 
 }
 
 
 /* =====================================================
-   CAMERA STOP
+   KAMERA STOPPEN
 ===================================================== */
 
 function stopCamera() {
@@ -2739,24 +2598,11 @@ function stopCamera() {
 
     }
 
-
-    const video =
-        document.getElementById(
-            'cameraPreview'
-        );
-
-
-    if (video) {
-
-        video.srcObject = null;
-
-    }
-
 }
 
 
 /* =====================================================
-   BRIDE VIDEO
+   BRAUTPAAR VIDEO
 ===================================================== */
 
 function showBrideVideo() {
@@ -2858,4 +2704,5 @@ document.addEventListener(
 </script>
 
 </body>
+
 </html>
